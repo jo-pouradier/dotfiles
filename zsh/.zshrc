@@ -54,7 +54,7 @@ setopt hist_find_no_dups
 
 # Aliases
 [[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
-[[ -f ~/.zsh_local_aliases ]] && source ~/.zsh_local_aliases
+[[ -f ~/.zsh_local ]] && source ~/.zsh_local # for specific commands
 
 
 # A bit of FzF
@@ -68,6 +68,7 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 
 # Open/Create tmux jo session on startup
-if command -v tmux &> /dev/null; then
-  tmux new -As jo
-fi
+# if command -v tmux &> /dev/null; then
+#   tmux new -As jo
+# fi
+
