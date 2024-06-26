@@ -54,8 +54,6 @@ setopt hist_find_no_dups
 
 # Aliases
 [[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
-[[ -f ~/.zsh_local ]] && source ~/.zsh_local # for specific commands
-
 
 # A bit of FzF
 # TODO: change depending on the OS
@@ -72,3 +70,5 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 #   tmux new -As jo
 # fi
 
+# Local config that might defer between OS
+[[ -f ~/.zsh_local ]] && source ~/.zsh_local
