@@ -1,0 +1,10 @@
+alias ls='ls --color'
+alias n='nvim'
+
+
+# ls
+alias la='ls -a'
+alias ll='ls -lh'
+alias lal='ls -lah'
+
+alias cl='clear'
