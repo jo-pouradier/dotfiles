@@ -2,7 +2,10 @@
 
 # from https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-sessionizer
 
-WORKING_FOLDERS="~/ ~/Desktop/Perso/Code/"
+# WORKING_FOLDERS can be overwritten in local config
+if [[ -z $WORKING_FOLDERS ]]; then
+  WORKING_FOLDERS="~/ ~/Desktop/Perso/Code/"
+fi
 
 # accept a folder as params 1
 if [[ $# -eq 1 ]]; then
