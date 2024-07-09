@@ -8,3 +8,5 @@ alias ll='ls -lh'
 alias lal='ls -lah'
 
 alias cl='clear'
+
+alias tse='tmux-sessionizer'

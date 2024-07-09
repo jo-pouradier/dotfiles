@@ -1,6 +1,7 @@
 # Higly inspired from https://www.youtube.com/watch?v=ud7YxC33Z3w&t=231s
 
 export EDITOR='nvim'
+export PATH=$PATH:~/.local/scripts/
 
 # Set Zinit path 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -65,10 +66,6 @@ eval "$(starship init zsh)"
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 
-# Open/Create tmux jo session on startup
-# if command -v tmux &> /dev/null; then
-#   tmux new -As jo
-# fi
 
 # Local config that might defer between OS
 [[ -f ~/.zsh_local ]] && source ~/.zsh_local
