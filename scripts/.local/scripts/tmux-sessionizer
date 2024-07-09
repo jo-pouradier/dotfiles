@@ -1,0 +1,53 @@
+#! /bin/bash
+
+# from https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-sessionizer
+
+WORKING_FOLDERS="~/ ~/Desktop/Perso/Code/"
+
+# accept a folder as params 1
+if [[ $# -eq 1 ]]; then
+  folder=$1
+  if [[ ! -d $(eval echo $folder) ]]; then
+    echo "folder $folder does not exist"
+    exit 1
+  fi
+else
+  # process string folder for find
+  folders=""
+  for p in $WORKING_FOLDERS; do
+    path=$(eval echo $p)
+    folders+=$(find $path -type d -maxdepth 1 -mindepth 1)
+    folders+=$'\n'
+  done
+
+  # fzf in a tmux popup window if possible
+  if [[ -z $TMUX ]]; then
+    folder=$(echo "$folders" | fzf-tmux -h 50% -w 70%)
+  else
+    folder=$(echo "$folders" | fzf)
+  fi
+fi
+
+if [[ -z $folder ]]; then
+  echo "No folder selected, exit"
+  exit 0
+fi
+
+# create relevant name for the session
+name=$(basename $folder | tr . _)
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s $name -c $folder
+    exit 0
+fi
+
+if ! tmux has-session -t=$name 2> /dev/null; then
+    tmux new-session -ds $name -c $folder
+fi
+
+if [[ -z $TMUX ]]; then
+  tmux attach -t $name
+else
+  tmux switch-client -t $name
+fi
