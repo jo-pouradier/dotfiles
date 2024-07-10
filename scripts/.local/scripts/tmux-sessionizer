@@ -7,6 +7,20 @@ if [[ -z $WORKING_FOLDERS ]]; then
   WORKING_FOLDERS="~/ ~/Desktop/Perso/Code/"
 fi
 
+# Check for --no-popup argument even if TMUX
+no_popup=false
+for arg in "$@"; do
+  case $arg in
+    --no-popup)
+      no_popup=true
+      shift
+      ;;
+    *)
+      folder=$arg
+      ;;
+  esac
+done
+
 # accept a folder as params 1
 if [[ $# -eq 1 ]]; then
   folder=$1
@@ -24,10 +38,10 @@ else
   done
 
   # fzf in a tmux popup window if possible
-  if [[ -z $TMUX ]]; then
-    folder=$(echo "$folders" | fzf-tmux -h 50% -w 70%)
-  else
+  if [[ $no_popup == true || -z $TMUX ]]; then
     folder=$(echo "$folders" | fzf)
+  else
+    folder=$(echo "$folders" | fzf-tmux -h 50% -w 70%)
   fi
 fi
 
