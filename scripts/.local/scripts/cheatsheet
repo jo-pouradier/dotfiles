@@ -15,23 +15,26 @@ curl_cht () {
 languages=`echo "python go javascript typescript bash css html" | tr ' ' '\n'`
 utils=`echo "jq find xargs tmux nvim curl less" | tr ' ' '\n'`
 
-if [[ -z $TMUX ]]; then
-  selected=`printf "$languages\n$utils" | fzf`
-else
-  selected=`printf "$languages\n$utils" | fzf-tmux -h 70% -w 50%`
+# set the fzf command if in tmux or not
+fzf_cmd="fzf"
+if [[ ! -z $TMUX ]]; then
+  fzf_cmd="fzf-tmux -h 80% -w 50%"
+fi
+
+# select the tool in fzf
+selected=`printf "$languages\n$utils" | $fzf_cmd`
+if [[ -z $selected ]]; then
+    exit 0
 fi
 
 read -p "Enter Query: " query
 
+# process the selected tool differ between utils and languages
+sep="~"
 if printf "$languages" | grep -qs "$selected"; then
   query=`echo $query | tr ' ' '+'`
-  cmd="curl -s cht.sh/$selected/$query | less -R"
-  curl_cht "$cmd"
-else
-  cmd="curl -s cht.sh/$selected~$query | less -R"
-  curl_cht "$cmd"
+  sep="/"
 fi
 
-
-
+curl_cht "curl -s cht.sh/$selected$sep$query | less -R"
 
