@@ -1,0 +1,37 @@
+#! /bin/bash
+
+# NOTE:
+# from: https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-cht.sh
+# with bette tmux capabilities
+
+curl_cht () {
+  if [[ -z $TMUX ]]; then
+    eval "$1"
+  else
+    tmux neww bash -c "$1"
+  fi
+}
+
+languages=`echo "python go javascript typescript bash css html" | tr ' ' '\n'`
+utils=`echo "jq find xargs tmux nvim curl less" | tr ' ' '\n'`
+
+if [[ -z $TMUX ]]; then
+  selected=`printf "$languages\n$utils" | fzf`
+else
+  selected=`printf "$languages\n$utils" | fzf-tmux -h 70% -w 50%`
+fi
+
+read -p "Enter Query: " query
+
+if printf "$languages" | grep -qs "$selected"; then
+  query=`echo $query | tr ' ' '+'`
+  cmd="curl -s cht.sh/$selected/$query | less -R"
+  curl_cht "$cmd"
+else
+  cmd="curl -s cht.sh/$selected~$query | less -R"
+  curl_cht "$cmd"
+fi
+
+
+
+
