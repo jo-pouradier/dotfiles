@@ -1,0 +1,252 @@
+{
+    // VSCODE BASE
+    "explorer.confirmDelete": false,
+    "liveServer.settings.donotShowInfoMsg": true,
+    "liveServer.settings.donotVerifyTags": true,
+    "liveServer.settings.useLocalIp": true,
+    "files.autoSave": "afterDelay",
+    "json.maxItemsComputed": 50000,
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    
+    // TERMINAL
+    "terminal.external.osxExec": "Warp.app",
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.fontFamily": "monospace",
+
+    // WORKBENCH
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.preferredHighContrastColorTheme": "Default Dark+",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#5f00af",
+        "statusBar.noFolderBackground": "#5f00af",
+        "statusBar.debuggingBackground": "#5f00af",
+        "statusBar.foreground": "#ffffff",
+        "statusBar.debuggingForeground": "#ffffff"
+    },
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook",
+        "*.m": "default",
+        "*.mlx": "default",
+        "*.a": "default",
+        "*.xls": "default",
+        "*.pdf": "default"
+    },
+
+    // GIT
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "git.openRepositoryInParentFolders": "always",
+    "git.ignoreRebaseWarning": true,
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": false,
+        "plaintext": true,
+        "markdown": true
+    },
+    "gitlens.advanced.messages": {
+        "suppressGitMissingWarning": true
+    },
+
+    // EDITOR
+    "editor.inlineSuggest.enabled": true,
+    "editor.renderWhitespace": "none",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.rulers": [80, 100, 120],
+    "editor.tabCompletion": "on",
+    "editor.lineNumbers": "relative",
+    "editor.suggestSelection": "first",
+    "editor.accessibilitySupport": "off",
+
+    // LANGUAGES
+    "[python]": {
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.diagnostics.sourceMapsEnabled": true,
+    "python.defaultInterpreterPath": "/usr/bin/python3",
+    "python.analysis.indexing": true,
+    "python.analysis.autoImportCompletions": true,
+    "autoDocstring.docstringFormat": "numpy",
+    "autoDocstring.quoteStyle": "'''",
+    "autoDocstring.startOnNewLine": true,
+    "autoDocstring.customTemplatePath": "/Users/jopouradierduteil/Documents/Code important/template_trouillot.mustache",
+    "autoDocstring.includeName": true,
+    "[go]": {
+        "editor.defaultFormatter": "golang.go"
+    },
+    "go.toolsManagement.autoUpdate": true,
+    "[xml]": {
+        "editor.defaultFormatter": "Oracle.oracle-java"
+    },
+    "[java]": {
+        "editor.defaultFormatter": "redhat.java"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+
+    // NASC TOUCHBAR
+    "nasc-touchbar.goToDefinition": false,
+    "nasc-touchbar.jumpToBracket": true,
+    "nasc-touchbar.addCursorBelow": false,
+    "nasc-touchbar.rename": false,
+    "nasc-touchbar.nextInFiles": true,
+    "nasc-touchbar.docs": true,
+    "nasc-touchbar.showCommands": false,
+    "nasc-touchbar.togglePanel": false,
+    "nasc-touchbar.indent": true,
+
+    // TODOHIGHLIGHT
+    "todohighlight.defaultStyle": {},
+    "todohighlight.exclude": [
+        "**/node_modules/**",
+        "**/bower_components/**",
+        "**/dist/**",
+        "**/build/**",
+        "**/.vscode/**",
+        "**/.github/**",
+        "**/_output/**",
+        "**/*.min.*",
+        "**/*.map",
+        "**/.next/**"
+    ],
+    "todohighlight.include": [
+        "**/*.md",
+        "**/*.java",
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.html",
+        "**/*.php",
+        "**/*.css",
+        "**/*.scss"
+    ],
+    "todohighlight.keywords": ["TODO", "FIXME", "HACK", "IDK", "REVIEW", "NOTE", "CHANGED", "JSP"],
+    
+    // VIM
+    "vim.leader": "<space>",
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.foldfix": true,
+    "vim.statusBarColorControl": true,
+    "vim.smartRelativeLine": true,
+    "vim.cursorStylePerMode.insert": "line",
+    "vim.cursorStylePerMode.normal": "block",
+    "vim.cursorStylePerMode.visual": "block-outline",
+    "vim.statusBarColors.commandlineinprogress": "",
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["j", "k"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "vim.handleKeys": {
+        "<C-a>": true,
+        "<C-f>": false
+    },
+    "vim.visualModeKeyBindings": [
+        {
+            "before": ["leader", "/"],
+            "commands": ["editor.action.commentLine"]
+        },
+        {
+            "before": ["leader", "y"],
+            "after": ["\"", "*", "y"]
+        },
+        {
+            "before": ["leader", "p"],
+            "after": ["\"", "*", "p"]
+        },
+        {
+            "before": ["leader", "d"],
+            "after": ["\"", "_", "d", "h"]
+        }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["<leader>", "e"],
+            "commands": ["workbench.view.explorer"]
+        },
+        {
+            "before": ["leader", "/"],
+            "commands": ["editor.action.commentLine"]
+        },
+        {
+            "before": ["leader", "f", "f"],
+            "commands": ["workbench.action.quickOpen"]
+        },
+        {
+            "before": ["leader", "F"],
+            "commands": ["editor.action.formatDocument"]
+        },
+        {
+            "before": ["leader", "r", "n"],
+            "commands": ["editor.action.rename"],
+            "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+        },
+        {
+            "before": ["leader", "x"],
+            "after": [":", "b", "d", "<CR>"]
+        },
+        {
+            // organize imports if python use pyright if typescript use typescript
+            "before": ["<leader>", "o", "i"],
+            "commands": ["editor.action.organizeImports"]
+        },
+        { "before": ["<C-u>"], "after": ["7", "k", "z", "z"] },
+        { "before": ["<C-d>"], "after": ["7", "j", "z", "z"] },
+        {
+            "before": ["leader", "\""],
+            "after": ["c", "s", "'", "\""]
+        },
+        {
+            "before": ["leader", "'"],
+            "after": ["c", "s", "\"", "'"]
+        },
+        {
+            "before": ["K"],
+            "commands": ["editor.action.showDefinitionPreviewHover"]
+        },
+        {
+            "before": ["tab"],
+            "commands": [":tabnext"]
+        },
+        {
+            "before": ["<shift+tab>"],
+            "commands": [":tabprev"]
+        },
+        {
+            "before": ["n"],
+            "after": ["n", "z", "z"]
+        },
+        {
+            "before": ["N"],
+            "after": ["N", "z", "z"]
+        },
+        {
+            "before": ["D"],
+            "after": ["d", "d"]
+        }
+    ],
+
+
+    // ERROR LENS
+    "errorLens.editorHoverPartsEnabled": {
+        "buttonsEnabled": true
+    },
+    "errorLens.onSaveTimeout": 500,
+
+    // PRETTIER
+    "prettier.printWidth": 100,
+    "prettier.tabWidth": 4,
+
+    // OTHER
+    "jdk.jdkhome": "c:\\Program Files\\Java\\jdk-17",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "redhat.telemetry.enabled": true,
+}
