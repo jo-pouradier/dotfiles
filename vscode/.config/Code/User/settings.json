@@ -147,7 +147,8 @@
     ],
     "vim.handleKeys": {
         "<C-a>": true,
-        "<C-f>": false
+        "<C-f>": false,
+        "<C-e>": false,
     },
     "vim.visualModeKeyBindings": [
         {
@@ -177,7 +178,7 @@
             "commands": ["editor.action.commentLine"]
         },
         {
-            "before": ["leader", "f", "f"],
+            "before": ["leader", "s", "f"],
             "commands": ["workbench.action.quickOpen"]
         },
         {
