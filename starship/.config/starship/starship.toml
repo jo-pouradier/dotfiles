@@ -3,11 +3,10 @@
 
 format = """
 $username\
-@(bold yellow)\
 $hostname \
 $directory \
 $all\
-$character (bold green)"""
+$time$character """
 
 palette = 'custom'
 # Inserts a blank line between shell prompts
@@ -26,9 +25,9 @@ vimcmd_visual_symbol = '[](bold yellow)'
 [username]
 show_always = true
 # style_user = "bg:#9A348E"
-style_user = "bold blue"
-style_root = "bg:#red"
-format = '[$user]($style)'
+style_user = 'bold blue'
+style_root = 'bg:#red'
+format = "[$user]($style)[@](yellow)"
 disabled = false
 
 [hostname]
@@ -41,3 +40,11 @@ format = '[$path]($style)[$read_only]($read_only_style) '
 
 [palettes.custom]
 lightblue = '#A2D2FF'
+
+[time]
+disabled = false
+format = '[$time]($style) '
+time_format = '%T'
+utc_time_offset = 'local'
+style = '#aa41aa'
+# time_range = '10:00:00-14:00:00'
