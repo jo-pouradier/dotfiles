@@ -1,0 +1,45 @@
+#/bin/bash
+
+# move to working directory
+# if macos go to ~/Desktop/Perso/Code/card-game-async
+working_directory=$(pwd)
+if [[ $(uname) == "Darwin" ]]; then
+  working_directory=~/Desktop/Perso/Code/card-game-async
+fi
+# if linux go to ~/Documents/card-game-async
+if [[ $(uname) == "Linux" ]]; then
+  working_directory=~/Documents/card-game-async
+fi
+
+cd $working_directory
+
+# if tmus sessino named card-game-async exists, attach and quit
+tmux has-session -t card-game-async && tmux attach-session -t card-game-async && exit
+
+# create tmux session with tmux-sessionizer
+tmux-sessionizer --no-popup ~/Desktop/Perso/Code/card-game-async
+TMUX_SESSION_NAME=card-game-async
+
+### Remember that my tmux is 1 based index
+
+# update git
+tmux send-keys -t $TMUX_SESSION_NAME:1 "git fetch --all" C-m
+
+# create new windows
+tmux new-window -t $TMUX_SESSION_NAME -n "front"
+# split front
+tmux split-window -t $TMUX_SESSION_NAME:2 -h
+tmux new-window -t $TMUX_SESSION_NAME -n "gameService"
+tmux new-window -t $TMUX_SESSION_NAME -n "mono"
+
+# in window 1 go to front and run npm run dev in second pane
+tmux send-keys -t $TMUX_SESSION_NAME:2.1 "nvim ." C-m
+tmux send-keys -t $TMUX_SESSION_NAME:2.2 "cd front" C-m "npm run dev" C-m
+tmux send-keys -t $TMUX_SESSION_NAME:3 "cd backend/gameService" C-m "npm run dev" C-m
+tmux send-keys -t $TMUX_SESSION_NAME:4 "cd backend/" C-m "code ." C-m
+
+# attach
+tmux attach-session -t $TMUX_SESSION_NAME
+
+# open browser to localhost:5173
+open http://localhost:5173
