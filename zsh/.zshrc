@@ -60,6 +60,13 @@ setopt hist_find_no_dups
 # TODO: change depending on the OS
 source <(fzf --zsh)
 
+# Java sdk management
+if [ -f ~/.sdkman/bin/sdkman-init.sh ];then
+  source "/Users/jopouradierduteil/.sdkman/bin/sdkman-init.sh"
+else
+  echo "sdkman is not installed, you should install it !"
+fi
+
 
 # Prompt with starship
 eval "$(starship init zsh)"
@@ -69,3 +76,7 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 # Local config that might defer between OS
 [[ -f ~/.zsh_local ]] && source ~/.zsh_local
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
