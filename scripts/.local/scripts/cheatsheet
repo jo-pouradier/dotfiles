@@ -12,8 +12,8 @@ curl_cht () {
   fi
 }
 
-languages=`echo "python go javascript typescript bash css html" | tr ' ' '\n'`
-utils=`echo "jq find xargs tmux nvim curl less" | tr ' ' '\n'`
+languages=`echo "python go javascript typescript bash css html java" | tr ' ' '\n'`
+utils=`echo "jq find xargs tmux nvim curl less tar zip maven" | tr ' ' '\n'`
 
 # set the fzf command if in tmux or not
 fzf_cmd="fzf"
