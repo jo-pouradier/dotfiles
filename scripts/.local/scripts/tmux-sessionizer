@@ -33,7 +33,7 @@ else
   folders=""
   for p in $WORKING_FOLDERS; do
     path=$(eval echo $p)
-    folders+=$(find $path -type d -maxdepth 1 -mindepth 1)
+    folders+=$(find $path -maxdepth 1 -mindepth 1 -type d )
     folders+=$'\n'
   done
 
