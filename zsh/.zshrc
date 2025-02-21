@@ -67,7 +67,7 @@ fi
 
 # Java sdk management
 if [ -f ~/.sdkman/bin/sdkman-init.sh ];then
-  source "/Users/jopouradierduteil/.sdkman/bin/sdkman-init.sh"
+  source "$HOME/.sdkman/bin/sdkman-init.sh"
 else
   echo "sdkman is not installed, you should install it !"
 fi
