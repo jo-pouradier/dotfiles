@@ -22,6 +22,9 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 zinit light MichaelAquilina/zsh-you-should-use
 zinit snippet OMZP::git
+zinit snippet OMZP::docker
+zinit snippet OMZP::mvn
+zinit snippet OMZP::ubuntu
 
 
 # Plugins setup
@@ -58,7 +61,9 @@ setopt hist_find_no_dups
 
 # A bit of FzF
 # TODO: change depending on the OS
-source <(fzf --zsh)
+if [ -z fzf ]; then
+  source <(fzf --zsh)
+fi
 
 # Java sdk management
 if [ -f ~/.sdkman/bin/sdkman-init.sh ];then

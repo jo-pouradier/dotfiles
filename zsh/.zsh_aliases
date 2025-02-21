@@ -11,3 +11,4 @@ alias cl='clear'
 
 alias tse='tmux-sessionizer'
 alias ta='tmux a'
+alias tt='tig --all'
