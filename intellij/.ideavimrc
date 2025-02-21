@@ -1,0 +1,81 @@
+" Set leader key to Space
+let mapleader = " "
+
+" Enable incremental search
+set incsearch
+
+" Highlight search results
+set hlsearch
+
+" Use system clipboard for copy-paste
+set clipboard+=unnamedplus
+
+" Enable EasyMotion (requires IdeaVim-EasyMotion plugin)
+let g:EasyMotion_do_mapping = 1
+
+" Use Ctrl keys
+set <C-a>
+set <C-f>
+set <C-e>
+
+" Cursor styles
+set guicursor=n:block,i:ver25,v:block
+
+" Keybindings
+
+" Insert mode: jk to escape
+imap jk <Esc>
+
+" Visual mode keybindings
+vmap <leader>/ :action CommentByLineComment<CR>
+vmap <leader>y "*y
+vmap <leader>p "*p
+vmap <leader>d "_dh
+
+" Normal mode keybindings
+nmap <leader>ca :action ShowIntentionActions<CR>
+nmap <leader>e :action ActivateProjectToolWindow<CR>
+
+
+nmap <leader>/ :action CommentByLineComment<CR>
+nmap <leader>sf :action GotoFile<CR>
+nmap <leader>ss :action GotoSymbol<CR>
+nmap <leader>sa :action GotoAction<CR>
+nmap <leader>s. :action RecentFiles<CR>
+
+nmap <leader>F :action ReformatCode<CR>
+nmap <leader>rn :action RenameElement<CR>
+nmap <leader>x :bd<CR>
+nmap <leader>oi :action OptimizeImports<CR>
+
+nmap <leader>rr :action IdeaVim.RealoadVimRc.reload<CR>
+" Scroll behavior
+nmap <C-u> 7kzz
+nmap <C-d> 7jzz
+
+" Change quotes
+nmap <leader>" cs'\" 
+nmap <leader>' cs"'
+
+" Show definition preview
+nmap K :action QuickJavaDoc<CR>
+
+" Tab navigation
+nmap <Tab> :tabnext<CR>
+nmap <S-Tab> :tabprev<CR>
+
+" Center search results
+nmap n nzz
+nmap N Nzz
+
+" Delete entire line with D
+nmap D dd
+
+" Run tests
+nmap <leader>tr :action RunContextConfiguration<CR>
+nmap <leader>tf :action RunCurrentFile<CR>
+
+" Plugins:
+Plug 'machakann/vim-highlightedyank'
+set which-key
+set timeoutlen=10000
