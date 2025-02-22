@@ -1,3 +1,5 @@
+alias plz='sudo'
+
 alias ls='ls --color'
 alias n='nvim'
 
