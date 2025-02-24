@@ -36,7 +36,6 @@ vmap <leader>d "_dh
 nmap <leader>ca :action ShowIntentionActions<CR>
 nmap <leader>e :action ActivateProjectToolWindow<CR>
 
-
 nmap <leader>/ :action CommentByLineComment<CR>
 nmap <leader>sf :action GotoFile<CR>
 nmap <leader>ss :action GotoSymbol<CR>
@@ -47,8 +46,15 @@ nmap <leader>F :action ReformatCode<CR>
 nmap <leader>rn :action RenameElement<CR>
 nmap <leader>x :bd<CR>
 nmap <leader>oi :action OptimizeImports<CR>
+" Git
+nnoremap <leader>hp :action VcsShowCurrentChangeMarker<CR>
+nnoremap <leader>hn :action VcsShowNextChangeMarker<CR>
+nnoremap <leader>hN :action VcsShowPrevChangeMarker<CR>
+nnoremap <leader>hr :action Vcs.RollbackChangedLines<CR>
+nnoremap <leader>hR :action ChangesView.Revert<CR>
 
-nmap <leader>rr :action IdeaVim.RealoadVimRc.reload<CR>
+nmap <leader>rr :action IdeaVim.ReloadVimRc.reload<CR>
+
 " Scroll behavior
 nmap <C-u> 7kzz
 nmap <C-d> 7jzz
@@ -73,9 +79,11 @@ nmap D dd
 
 " Run tests
 nmap <leader>tr :action RunContextConfiguration<CR>
+
 nmap <leader>tf :action RunCurrentFile<CR>
 
 " Plugins:
+Plug 'tpope/vim-commentary'
 Plug 'machakann/vim-highlightedyank'
 set which-key
 set timeoutlen=10000
