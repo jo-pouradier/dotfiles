@@ -14,20 +14,28 @@ set clipboard+=unnamedplus
 let g:EasyMotion_do_mapping = 1
 
 " Use Ctrl keys
-set <C-a>
 set <C-f>
-set <C-e>
 
 " Cursor styles
 set guicursor=n:block,i:ver25,v:block
+set number
+set relativenumber
 
 " Keybindings
+
+" Center search results
+nmap n nzz
+nmap N Nzz
+
+" Delete entire line with D
+nmap D dd
 
 " Insert mode: jk to escape
 imap jk <Esc>
 
 " Visual mode keybindings
 vmap <leader>/ :action CommentByLineComment<CR>
+" Copy utils
 vmap <leader>y "*y
 vmap <leader>p "*p
 vmap <leader>d "_dh
@@ -37,10 +45,13 @@ nmap <leader>ca :action ShowIntentionActions<CR>
 nmap <leader>e :action ActivateProjectToolWindow<CR>
 
 nmap <leader>/ :action CommentByLineComment<CR>
+
+" Search
 nmap <leader>sf :action GotoFile<CR>
 nmap <leader>ss :action GotoSymbol<CR>
 nmap <leader>sa :action GotoAction<CR>
 nmap <leader>s. :action RecentFiles<CR>
+nmap <leader>sd :action ActivateProblemsViewToolWindow<CR>
 
 nmap <leader>F :action ReformatCode<CR>
 nmap <leader>rn :action RenameElement<CR>
@@ -52,12 +63,29 @@ nnoremap <leader>hn :action VcsShowNextChangeMarker<CR>
 nnoremap <leader>hN :action VcsShowPrevChangeMarker<CR>
 nnoremap <leader>hr :action Vcs.RollbackChangedLines<CR>
 nnoremap <leader>hR :action ChangesView.Revert<CR>
+" Runnable
+nnoremap <leader>rp :action Run<CR>
+nnoremap <leader>rr :action Rerun<CR>
+nnoremap <leader>rc :action RunClass<CR>
+nnoremap <leader>rm :action RunContextGroup<CR>
+nnoremap <leader>rf :action RunCurrentFile<CR>
+nnoremap <leader>rs :action Stop<CR>
+nnoremap <leader>rC :action RunContextConfiguration<CR>
+" Generate
+nnoremap <leader>gg :action Generate<CR>
+nnoremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
+vnoremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
+" Diagnostic
+nnoremap <leader>de :action ShowErrorDescription<CR>
+nnoremap <leader>dn :action GotoNextError<CR>
+nnoremap <leader>dp :action GoToPreviousError<CR>
+nnoremap <leader>ip :action InspectCode<CR>
 
-nmap <leader>rr :action IdeaVim.ReloadVimRc.reload<CR>
+nmap <leader>rv :action IdeaVim.ReloadVimRc.reload<CR>
 
 " Scroll behavior
-nmap <C-u> 7kzz
-nmap <C-d> 7jzz
+nmap <C-u> 10kzz
+nmap <C-d> 10jzz
 
 " Change quotes
 nmap <leader>" cs'\" 
@@ -70,17 +98,7 @@ nmap K :action QuickJavaDoc<CR>
 nmap <Tab> :tabnext<CR>
 nmap <S-Tab> :tabprev<CR>
 
-" Center search results
-nmap n nzz
-nmap N Nzz
-
-" Delete entire line with D
-nmap D dd
-
-" Run tests
-nmap <leader>tr :action RunContextConfiguration<CR>
-
-nmap <leader>tf :action RunCurrentFile<CR>
+nmap <leader>T :action ActivateTerminalToolWindow<CR>
 
 " Plugins:
 Plug 'tpope/vim-commentary'
