@@ -46,6 +46,10 @@ nmap <leader>e :action ActivateProjectToolWindow<CR>
 
 nmap <leader>/ :action CommentByLineComment<CR>
 
+" Go to
+nmap gI :action GotoImplementation<CR>
+nmap <leader><leader> :action RecentLocations<CR>
+nmap gt :action GotoTest<CR>
 " Search
 nmap <leader>sf :action GotoFile<CR>
 nmap <leader>ss :action GotoSymbol<CR>
@@ -86,6 +90,11 @@ nmap <leader>rv :action IdeaVim.ReloadVimRc.reload<CR>
 " Scroll behavior
 nmap <C-u> 10kzz
 nmap <C-d> 10jzz
+" navigation
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+nmap <C-h> <C-w>h
 
 " Change quotes
 nmap <leader>" cs'\" 
@@ -104,4 +113,13 @@ nmap <leader>T :action ActivateTerminalToolWindow<CR>
 Plug 'tpope/vim-commentary'
 Plug 'machakann/vim-highlightedyank'
 set which-key
+set NERDTree
+set surround " ys* = add, cs* = change, ds* = delete
 set timeoutlen=10000
+
+" Keybindings Plugins
+let g:NERDTreeMapPreview="<Tab>"
+let g:NERDTreeMapActivateNode = 'l'
+let g:NERDTreeMapJumpParent = 'h'
+let g:NERDTreeMapPreviewVSplit = 'v'
+let g:NERDTreeMapPreviewSplit = 's'
