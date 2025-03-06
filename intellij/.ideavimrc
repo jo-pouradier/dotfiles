@@ -6,6 +6,7 @@ set incsearch
 
 " Highlight search results
 set hlsearch
+set ignorecase
 
 " Use system clipboard for copy-paste
 set clipboard+=unnamedplus
@@ -33,6 +34,8 @@ nmap D dd
 " Insert mode: jk to escape
 imap jk <Esc>
 
+nmap dm :action ToggleBookmark<CR>
+
 " Visual mode keybindings
 vmap <leader>/ :action CommentByLineComment<CR>
 " Copy utils
@@ -42,7 +45,6 @@ vmap <leader>d "_dh
 
 " Normal mode keybindings
 nmap <leader>ca :action ShowIntentionActions<CR>
-nmap <leader>e :action ActivateProjectToolWindow<CR>
 
 nmap <leader>/ :action CommentByLineComment<CR>
 
@@ -56,6 +58,7 @@ nmap <leader>ss :action GotoSymbol<CR>
 nmap <leader>sa :action GotoAction<CR>
 nmap <leader>s. :action RecentFiles<CR>
 nmap <leader>sd :action ActivateProblemsViewToolWindow<CR>
+nmap <leader>su :action ShowUmlDiagram<CR>
 
 nmap <leader>F :action ReformatCode<CR>
 nmap <leader>rn :action RenameElement<CR>
@@ -95,6 +98,8 @@ nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 nmap <C-h> <C-w>h
+" moving tabs
+nmap <C-m> :action MoveEditorToOppositeTabGroup<CR>
 
 " Change quotes
 nmap <leader>" cs'\" 
@@ -123,3 +128,6 @@ let g:NERDTreeMapActivateNode = 'l'
 let g:NERDTreeMapJumpParent = 'h'
 let g:NERDTreeMapPreviewVSplit = 'v'
 let g:NERDTreeMapPreviewSplit = 's'
+
+nmap <leader>e :NERDTreeFind<CR>
+
