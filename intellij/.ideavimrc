@@ -1,23 +1,42 @@
 " Set leader key to Space
-let mapleader = " "
+let noremapleader = " "
 
 " Enable incremental search
 set incsearch
 
 " Highlight search results
 set hlsearch
+map <ESC> :nohlsearch<CR>
 set ignorecase
 
 " Use system clipboard for copy-paste
 set clipboard+=unnamedplus
 
-" Enable EasyMotion (requires IdeaVim-EasyMotion plugin)
-let g:EasyMotion_do_mapping = 1
+" Enable EasyMotion requires IdeaVim-EasyMotion plugin
+let g:EasyMotion_do_noremapping = 1
+
+" how definition preview
+nnoremap K :action QuickJavaDoc<CR>
 
 " Use Ctrl keys
 set <C-f>
+" Tab navigation
+nnoremap <Tab> :tabnext<CR>
+nnoremap <S-Tab> :tabprev<CR>
+" Scroll behavior
+nnoremap <C-u> 10kzz
+nnoremap <C-d> 10jzz
+" navigation
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+" moving tabs
+nnoremap <C-m> :action MoveEditorToOppositeTabGroup<CR>
+" Pairs
+set matchpairs+=<:>
 
-" Cursor styles
+ Cursor styles
 set guicursor=n:block,i:ver25,v:block
 set number
 set relativenumber
@@ -25,45 +44,52 @@ set relativenumber
 " Keybindings
 
 " Center search results
-nmap n nzz
-nmap N Nzz
+nnoremap n nzz
+nnoremap N Nzz
 
 " Delete entire line with D
-nmap D dd
+nnoremap D dd
 
 " Insert mode: jk to escape
-imap jk <Esc>
+inoremap jk <Esc>
 
-nmap dm :action ToggleBookmark<CR>
+nnoremap dm :action ToggleBookmark<CR>
+noremap <leader>/ :action CommentByLineComment<CR>
 
-" Visual mode keybindings
-vmap <leader>/ :action CommentByLineComment<CR>
+
 " Copy utils
-vmap <leader>y "*y
-vmap <leader>p "*p
-vmap <leader>d "_dh
+vnoremap <leader>y \"*y
+vnoremap <leader>p \"*p
+vnoremap <leader>d \"_dh
+
 
 " Normal mode keybindings
-nmap <leader>ca :action ShowIntentionActions<CR>
-
-nmap <leader>/ :action CommentByLineComment<CR>
+noremap <leader>ca :action ShowIntentionActions<CR>
 
 " Go to
-nmap gI :action GotoImplementation<CR>
-nmap <leader><leader> :action RecentLocations<CR>
-nmap gt :action GotoTest<CR>
+nnoremap gi :action JumpToLastChange<CR>
+nnoremap gI :action GotoImplementation<CR>
+nnoremap <leader><leader> :action RecentLocations<CR>
+nnoremap gt :action GotoTest<CR>
 " Search
-nmap <leader>sf :action GotoFile<CR>
-nmap <leader>ss :action GotoSymbol<CR>
-nmap <leader>sa :action GotoAction<CR>
-nmap <leader>s. :action RecentFiles<CR>
-nmap <leader>sd :action ActivateProblemsViewToolWindow<CR>
-nmap <leader>su :action ShowUmlDiagram<CR>
+nnoremap <leader>sf :action GotoFile<CR>
+nnoremap <leader>sc :action GotoClass<CR>
+nnoremap <leader>ss :action GotoSymbol<CR>
+nnoremap <leader>sa :action GotoAction<CR>
+nnoremap <leader>s. :action RecentFiles<CR>
+nnoremap <leader>sd :action ActivateProblemsViewToolWindow<CR>
+nnoremap <leader>su :action FindUsages<CR>
+nnoremap <leader>sU :action ShowUmlDiagram<CR>
+" Show
+nnoremap <leader>Su :action ShowUsages<CR>
+nnoremap <leader>Si :action QuickImplementations<CR>
+nnoremap <leader>Sd :action QuickTypeDefinition<CR>
+noremap <leader>SK :action ShowHoverInfo<CR>
 
-nmap <leader>F :action ReformatCode<CR>
-nmap <leader>rn :action RenameElement<CR>
-nmap <leader>x :bd<CR>
-nmap <leader>oi :action OptimizeImports<CR>
+nnoremap <leader>F :action ReformatCode<CR>
+nnoremap <leader>rn :action RenameElement<CR>
+nnoremap <leader>x :bd<CR>
+nnoremap <leader>oi :action OptimizeImports<CR>
 " Git
 nnoremap <leader>hp :action VcsShowCurrentChangeMarker<CR>
 nnoremap <leader>hn :action VcsShowNextChangeMarker<CR>
@@ -75,44 +101,25 @@ nnoremap <leader>rp :action Run<CR>
 nnoremap <leader>rr :action Rerun<CR>
 nnoremap <leader>rc :action RunClass<CR>
 nnoremap <leader>rf :action RunCurrentFile<CR>
-nnoremap <leader>rs :action Stop<CR>
+nnoremap <leader>rS :action Stop<CR>
 nnoremap <leader>rs :action ChooseRunConfiguration<CR>
 
 "Generate
 nnoremap <leader>gg :action Generate<CR>
-nnoremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
-vnoremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
+noremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
 " Diagnostic
 nnoremap <leader>de :action ShowErrorDescription<CR>
 nnoremap <leader>dn :action GotoNextError<CR>
 nnoremap <leader>dp :action GoToPreviousError<CR>
 nnoremap <leader>ip :action InspectCode<CR>
+" Debug
+nnoremap <leader>db :action ToggleLineBreakpoint<CR>
+nnoremap <leader>do :action StepOver<CR>
+nnoremap <leader>di :action StepInto<CR>
 
-nmap <leader>rv :action IdeaVim.ReloadVimRc.reload<CR>
-
-" Scroll behavior
-nmap <C-u> 10kzz
-nmap <C-d> 10jzz
-" navigation
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
-nmap <C-h> <C-w>h
-" moving tabs
-nmap <C-m> :action MoveEditorToOppositeTabGroup<CR>
-
-" Change quotes
-nmap <leader>" cs'\" 
-nmap <leader>' cs"'
-
-" Show definition preview
-nmap K :action QuickJavaDoc<CR>
-
-" Tab navigation
-nmap <Tab> :tabnext<CR>
-nmap <S-Tab> :tabprev<CR>
-
-nmap <leader>T :action ActivateTerminalToolWindow<CR>
+" Utils
+nnoremap <leader>rv :action IdeaVim.ReloadVimRc.reload<CR>
+nnoremap <leader>T :action ActivateTerminalToolWindow<CR>
 
 " Plugins:
 Plug 'tpope/vim-commentary'
@@ -120,14 +127,15 @@ Plug 'machakann/vim-highlightedyank'
 set which-key
 set NERDTree
 set surround " ys* = add, cs* = change, ds* = delete
+noremap <leader>sw :action SurroundWith<CR>
 set timeoutlen=10000
 
 " Keybindings Plugins
-let g:NERDTreeMapPreview="<Tab>"
-let g:NERDTreeMapActivateNode = 'l'
-let g:NERDTreeMapJumpParent = 'h'
-let g:NERDTreeMapPreviewVSplit = 'v'
-let g:NERDTreeMapPreviewSplit = 's'
+let g:NERDTreenoremapPreview="<Tab>"
+let g:NERDTreenoremapActivateNode = 'l'
+let g:NERDTreenoremapJumpParent = 'h'
+let g:NERDTreenoremapOpenVSplit = 'V'
+let g:NERDTreenoremapOpenSplit = 'S'
 
-nmap <leader>e :NERDTreeFind<CR>
+nnoremap <leader>e :NERDTreeFind<CR>
 
