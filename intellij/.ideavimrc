@@ -1,5 +1,5 @@
 " Set leader key to Space
-let noremapleader = " "
+let mapleader = " "
 
 " Enable incremental search
 set incsearch
@@ -56,6 +56,7 @@ inoremap jk <Esc>
 nnoremap dm :action ToggleBookmark<CR>
 noremap <leader>/ :action CommentByLineComment<CR>
 
+nnoremap <leader>v <C-w>v<C-w>h:bd<CR><C-w>l
 
 " Copy utils
 vnoremap <leader>y \"*y
@@ -66,6 +67,10 @@ vnoremap <leader>d \"_dh
 " Normal mode keybindings
 noremap <leader>ca :action ShowIntentionActions<CR>
 
+" Mode
+nnoremap <leader>mp :action TogglePresentationMode<CR>
+
+nnoremap <leader>mz :action ToggleZenMode<CR>
 " Go to
 nnoremap gi :action JumpToLastChange<CR>
 nnoremap gI :action GotoImplementation<CR>
@@ -76,6 +81,7 @@ nnoremap <leader>sf :action GotoFile<CR>
 nnoremap <leader>sc :action GotoClass<CR>
 nnoremap <leader>ss :action GotoSymbol<CR>
 nnoremap <leader>sa :action GotoAction<CR>
+nnoremap <leader>sg :action SearchEverywhere<CR>
 nnoremap <leader>s. :action RecentFiles<CR>
 nnoremap <leader>sd :action ActivateProblemsViewToolWindow<CR>
 nnoremap <leader>su :action FindUsages<CR>
@@ -89,6 +95,7 @@ noremap <leader>SK :action ShowHoverInfo<CR>
 nnoremap <leader>F :action ReformatCode<CR>
 nnoremap <leader>rn :action RenameElement<CR>
 nnoremap <leader>x :bd<CR>
+nnoremap <leader>X :action CloseAllEditorsButActive<CR>
 nnoremap <leader>oi :action OptimizeImports<CR>
 " Git
 nnoremap <leader>hp :action VcsShowCurrentChangeMarker<CR>
@@ -101,25 +108,30 @@ nnoremap <leader>rp :action Run<CR>
 nnoremap <leader>rr :action Rerun<CR>
 nnoremap <leader>rc :action RunClass<CR>
 nnoremap <leader>rf :action RunCurrentFile<CR>
-nnoremap <leader>rS :action Stop<CR>
+nnoremap <leader>rS :action Stop<CR>D
+nnoremap <leader>rd :action Debug<CR>D
 nnoremap <leader>rs :action ChooseRunConfiguration<CR>
+nnoremap <leader>rt :action TestTreePopupMenu<CR>
 
 "Generate
-nnoremap <leader>gg :action Generate<CR>
+noremap <leader>gg :action Generate<CR>
 noremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
 " Diagnostic
 nnoremap <leader>de :action ShowErrorDescription<CR>
 nnoremap <leader>dn :action GotoNextError<CR>
 nnoremap <leader>dp :action GoToPreviousError<CR>
 nnoremap <leader>ip :action InspectCode<CR>
+nnoremap <leader>dq :action ActivateProblemsViewToolWindow<CR>
 " Debug
-nnoremap <leader>db :action ToggleLineBreakpoint<CR>
+nnoremap <leader>b :action ToggleLineBreakpoint<CR>
+nnoremap <leader>B :action AddConditionalBreakpoint<CR>
 nnoremap <leader>do :action StepOver<CR>
 nnoremap <leader>di :action StepInto<CR>
 
 " Utils
 nnoremap <leader>rv :action IdeaVim.ReloadVimRc.reload<CR>
 nnoremap <leader>T :action ActivateTerminalToolWindow<CR>
+" inoremap <leader>K :action ParameterInfo<CR>
 
 " Plugins:
 Plug 'tpope/vim-commentary'
