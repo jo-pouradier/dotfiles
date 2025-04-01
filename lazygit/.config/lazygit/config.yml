@@ -19,7 +19,7 @@ gui:
     wrapLinesInStagingView: true
     language: auto
     timeFormat: 02 Jan 06
-    shortTimeFormat: 3:04PM
+    shortTimeFormat: 15:02:05
     theme:
         activeBorderColor:
             - green

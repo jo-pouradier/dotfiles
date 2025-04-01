@@ -4,6 +4,9 @@ let mapleader = " "
 " Enable incremental search
 set incsearch
 
+let g:EasyMotion_do_noremapping = 1
+
+
 " Highlight search results
 set hlsearch
 map <ESC> :nohlsearch<CR>
@@ -12,10 +15,7 @@ set ignorecase
 " Use system clipboard for copy-paste
 set clipboard+=unnamedplus
 
-" Enable EasyMotion requires IdeaVim-EasyMotion plugin
-let g:EasyMotion_do_noremapping = 1
-
-" how definition preview
+" Enable EasyMotion requires IdeaVim-EasyMotion plugin" how definition preview
 nnoremap K :action QuickJavaDoc<CR>
 
 " Use Ctrl keys
@@ -69,8 +69,9 @@ noremap <leader>ca :action ShowIntentionActions<CR>
 
 " Mode
 nnoremap <leader>mp :action TogglePresentationMode<CR>
-
 nnoremap <leader>mz :action ToggleZenMode<CR>
+nnoremap <leader>m+ :action ChangeIdeScale<CR>
+
 " Go to
 nnoremap gi :action JumpToLastChange<CR>
 nnoremap gI :action GotoImplementation<CR>
@@ -82,6 +83,7 @@ nnoremap <leader>sc :action GotoClass<CR>
 nnoremap <leader>ss :action GotoSymbol<CR>
 nnoremap <leader>sa :action GotoAction<CR>
 nnoremap <leader>sg :action SearchEverywhere<CR>
+nnoremap <leader>st :action TextSearchAction<CR>
 nnoremap <leader>s. :action RecentFiles<CR>
 nnoremap <leader>sd :action ActivateProblemsViewToolWindow<CR>
 nnoremap <leader>su :action FindUsages<CR>
@@ -107,15 +109,17 @@ nnoremap <leader>hR :action ChangesView.Revert<CR>
 nnoremap <leader>rp :action Run<CR>
 nnoremap <leader>rr :action Rerun<CR>
 nnoremap <leader>rc :action RunClass<CR>
+nnoremap <leader>rC :action Coverage<CR>
 nnoremap <leader>rf :action RunCurrentFile<CR>
-nnoremap <leader>rS :action Stop<CR>D
-nnoremap <leader>rd :action Debug<CR>D
+nnoremap <leader>rS :action Stop<CR>
+nnoremap <leader>rd :action Debug<CR>
 nnoremap <leader>rs :action ChooseRunConfiguration<CR>
 nnoremap <leader>rt :action TestTreePopupMenu<CR>
 
 "Generate
 noremap <leader>gg :action Generate<CR>
 noremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
+noremap <leader>G :action EditorPopupMenu<CR>
 " Diagnostic
 nnoremap <leader>de :action ShowErrorDescription<CR>
 nnoremap <leader>dn :action GotoNextError<CR>
@@ -138,6 +142,7 @@ Plug 'tpope/vim-commentary'
 Plug 'machakann/vim-highlightedyank'
 set which-key
 set NERDTree
+set matchit
 set surround " ys* = add, cs* = change, ds* = delete
 noremap <leader>sw :action SurroundWith<CR>
 set timeoutlen=10000
