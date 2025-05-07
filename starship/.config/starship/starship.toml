@@ -48,3 +48,8 @@ time_format = '%T'
 utc_time_offset = 'local'
 style = '#aa41aa'
 # time_range = '10:00:00-14:00:00'
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
