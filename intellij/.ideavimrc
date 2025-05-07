@@ -80,10 +80,11 @@ nnoremap gt :action GotoTest<CR>
 " Search
 nnoremap <leader>sf :action GotoFile<CR>
 nnoremap <leader>sc :action GotoClass<CR>
-nnoremap <leader>ss :action GotoSymbol<CR>
-nnoremap <leader>sa :action GotoAction<CR>
+noremap <leader>ss :action GotoSymbol<CR>
+noremap <leader>sa :action GotoAction<CR>
 nnoremap <leader>sg :action SearchEverywhere<CR>
-nnoremap <leader>st :action TextSearchAction<CR>
+nnoremap <leader>sT :action ChangeLaf<CR>
+noremap <leader>st :action TextSearchAction<CR>
 nnoremap <leader>s. :action RecentFiles<CR>
 nnoremap <leader>sd :action ActivateProblemsViewToolWindow<CR>
 nnoremap <leader>su :action FindUsages<CR>
