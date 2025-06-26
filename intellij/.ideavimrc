@@ -121,6 +121,14 @@ nnoremap <leader>rt :action TestTreePopupMenu<CR>
 noremap <leader>gg :action Generate<CR>
 noremap <leader>gr :action Refactorings.QuickListPopupAction<CR>
 noremap <leader>G :action EditorPopupMenu<CR>
+
+" Extract
+noremap <leader>ec :action IntroduceConstant<CR>
+noremap <leader>ev :action IntroduceVariable<CR>
+noremap <leader>eC :action ExtractClass<CR>
+noremap <leader>em :action ExtractMethod<CR>
+noremap <leader>ei :action ExtractInterface<CR>
+
 " Diagnostic
 nnoremap <leader>de :action ShowErrorDescription<CR>
 nnoremap <leader>dn :action GotoNextError<CR>
@@ -155,5 +163,5 @@ let g:NERDTreenoremapJumpParent = 'h'
 let g:NERDTreenoremapOpenVSplit = 'V'
 let g:NERDTreenoremapOpenSplit = 'S'
 
-nnoremap <leader>e :NERDTreeFind<CR>
+nnoremap <leader>E :NERDTreeFind<CR>
 
