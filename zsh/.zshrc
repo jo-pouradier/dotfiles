@@ -116,3 +116,6 @@ zinit cdreplay -q
 if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
 fi
+
+# opencode
+export PATH=/home/jo-pouradier/.opencode/bin:$PATH
