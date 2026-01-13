@@ -50,9 +50,6 @@ nnoremap N Nzz
 " Delete entire line with D
 nnoremap D dd
 
-" Insert mode: jk to escape
-inoremap jk <Esc>
-
 nnoremap dm :action ToggleBookmark<CR>
 noremap <leader>/ :action CommentByLineComment<CR>
 
@@ -77,6 +74,7 @@ nnoremap gi :action JumpToLastChange<CR>
 nnoremap gI :action GotoImplementation<CR>
 nnoremap <leader><leader> :action RecentLocations<CR>
 nnoremap gt :action GotoTest<CR>
+nnoremap gs :action Diff.OpenInEditor<CR>
 " Search
 nnoremap <leader>sf :action GotoFile<CR>
 nnoremap <leader>sc :action GotoClass<CR>
@@ -164,4 +162,4 @@ let g:NERDTreenoremapOpenVSplit = 'V'
 let g:NERDTreenoremapOpenSplit = 'S'
 
 nnoremap <leader>E :NERDTreeFind<CR>
-
+nnoremap <leader>gU l:action uuidgenerator.random<CR>
