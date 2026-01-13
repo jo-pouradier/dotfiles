@@ -1,0 +1,347 @@
+#!/bin/bash
+set -e
+
+# ============================================================================
+# DICTATE - Dictée vocale rapide avec Whisper.cpp
+# ============================================================================
+#
+# DESCRIPTION:
+#   Script de dictée vocale utilisant whisper.cpp pour la transcription.
+#   Supporte deux modes: CLI interactif et GUI pour raccourcis système.
+#
+# PRÉREQUIS:
+#   - whisper.cpp compilé et installé
+#   - Modèle ggml-tiny.bin téléchargé
+#   - arecord (Linux) ou ffmpeg (macOS) pour l'enregistrement
+#   - notify-send (Linux) pour les notifications GUI
+#
+# USAGE:
+#   ./dictate               # Mode CLI interactif
+#   ./dictate --gui         # Mode GUI toggle pour raccourcis
+#   ./dictate --cleanup     # Nettoie les fichiers d'état
+#   ./dictate --help        # Affiche l'aide
+#
+# MODE CLI:
+#   - Utilisation interactive en terminal
+#   - Boucle continue: ENTRÉE → enregistre → ENTRÉE → transcrit → répète
+#   - Ctrl+C pour quitter
+#   - Parfait pour usage en développement/terminal
+#
+# MODE GUI (TOGGLE):
+#   - Optimisé pour raccourcis système (Cmd+Shift+D, Ctrl+Shift+D, etc.)
+#   - 1er raccourci: Démarre l'enregistrement + notification
+#   - 2ème raccourci: Arrête + transcrit + copie dans le presse-papier
+#   - Notifications visuelles pour suivre l'état
+#   - Gestion d'état avec fichiers lock pour éviter les conflits
+#
+# CONFIGURATION RACCOURCIS SYSTÈME:
+#
+#   Linux/GNOME:
+#     1. Paramètres > Clavier > Raccourcis personnalisés
+#     2. Nom: "Dictée Vocale"
+#     3. Commande: /chemin/vers/dictate --gui
+#     4. Raccourci: Ctrl+Shift+D
+#
+#   macOS:
+#     Option 1 - Raccourci direct:
+#       1. Préférences Système > Clavier > Raccourcis > Services
+#       2. Ajouter raccourci pour commande: /chemin/vers/dictate --gui
+#       3. Raccourci: Cmd+Shift+D
+#
+#     Option 2 - Automator (recommandé):
+#       1. Automator > Service rapide
+#       2. Exécuter script shell: /chemin/vers/dictate --gui
+#       3. Assigner raccourci dans Préférences Système
+#
+# EXEMPLE D'UTILISATION GUI:
+#   1. Configurer raccourci Cmd+Shift+D
+#   2. Appuyer sur Cmd+Shift+D → "🔴 Enregistrement démarré"
+#   3. Parler: "Bonjour, comment allez-vous ?"
+#   4. Appuyer sur Cmd+Shift+D → "✅ Succès! Bonjour, comment allez-vous ?"
+#   5. Texte automatiquement copié dans le presse-papier
+#
+# FICHIERS D'ÉTAT (mode GUI):
+#   /tmp/dictate-recording.lock    # Indique si enregistrement en cours
+#   /tmp/dictate-recording.pid     # PID du processus d'enregistrement
+#   /tmp/vibe-quick.wav           # Fichier audio temporaire
+#
+# DÉPANNAGE:
+#   - Si blocage: ./dictate --cleanup
+#   - Vérifier whisper.cpp: ls ~/Documents/whisper.cpp/build/bin/
+#   - Vérifier modèle: ls ~/Documents/whisper.cpp/models/ggml-tiny.bin
+#   - Tester notifications: notify-send "Test" (Linux)
+#
+# AUTEUR: Assistant IA
+# VERSION: 2.0 (Toggle GUI Mode)
+# ============================================================================
+
+# Configuration
+TMP="/tmp/vibe-quick.wav"
+LOCK_FILE="/tmp/dictate-recording.lock"
+PID_FILE="/tmp/dictate-recording.pid"
+MODEL="$HOME/Documents/whisper.cpp/models/ggml-tiny.bin"
+WHISPER="$HOME/Documents/whisper.cpp/build/bin/whisper-cli"
+OS="$(uname)"
+
+# Check arguments
+GUI_MODE=false
+case "${1:-}" in
+    --gui|-g)
+        GUI_MODE=true
+        ;;
+    --cleanup)
+        echo "🧹 Nettoyage des fichiers d'état..."
+        rm -f "$LOCK_FILE" "$PID_FILE" "$TMP"
+        echo "✅ Nettoyage terminé"
+        exit 0
+        ;;
+    --help|-h)
+        echo "🎤 Dictée vocale rapide"
+        echo ""
+        echo "Usage:"
+        echo "  dictate           Mode CLI interactif (défaut)"
+        echo "  dictate --gui     Mode GUI pour raccourcis système"
+        echo "  dictate --cleanup Nettoie les fichiers d'état orphelins"
+        echo "  dictate --help    Affiche cette aide"
+        echo ""
+        echo "Mode CLI:"
+        echo "  - Utilisation interactive en terminal"
+        echo "  - Boucle continue: ENTRÉE → enregistre → ENTRÉE → transcrit"
+        echo "  - Ctrl+C pour quitter"
+        echo ""
+        echo "Mode GUI (--gui):"
+        echo "  - Parfait pour raccourcis système (Cmd+Shift+D, etc.)"
+        echo "  - Mode toggle: 1er raccourci → commence, 2ème raccourci → arrête et transcrit"
+        echo "  - Notifications visuelles (Linux: notify-send, Mac: osascript)"
+        echo "  - Copie automatique dans le presse-papier"
+        echo ""
+        echo "Exemples de configuration de raccourcis:"
+        echo "  macOS: Système > Raccourcis clavier > Services"
+        echo "  Linux/GNOME: Paramètres > Clavier > Raccourcis personnalisés"
+        echo "    Commande: /path/to/dictate --gui"
+        echo "    Usage: Raccourci → parle → Même raccourci → transcrit"
+        exit 0
+        ;;
+    "")
+        # Default CLI mode
+        ;;
+    *)
+        echo "❌ Option inconnue: $1"
+        echo "Utilisez 'dictate --help' pour voir les options disponibles"
+        exit 1
+        ;;
+esac
+
+# Vérification des fichiers requis
+if [[ ! -f "$WHISPER" ]]; then
+    if [[ "$GUI_MODE" == true ]]; then
+        notify_user "❌ Erreur" "Whisper binary not found at $WHISPER"
+    else
+        echo "❌ Whisper binary not found at $WHISPER"
+    fi
+    exit 1
+fi
+
+if [[ ! -f "$MODEL" ]]; then
+    if [[ "$GUI_MODE" == true ]]; then
+        notify_user "❌ Erreur" "Model not found at $MODEL"
+    else
+        echo "❌ Model not found at $MODEL"
+    fi
+    exit 1
+fi
+
+# Notification function for GUI mode
+notify_user() {
+    local title="$1"
+    local message="$2"
+    local urgency="${3:-normal}"
+    
+    if [[ "$OS" == "Linux" ]]; then
+        if command -v notify-send >/dev/null; then
+            notify-send --urgency="$urgency" --expire-time=3000 "$title" "$message"
+        fi
+    elif [[ "$OS" == "Darwin" ]]; then
+        osascript -e "display notification \"$message\" with title \"$title\""
+    fi
+}
+
+copy_clipboard() {
+    if [[ "$OS" == "Linux" ]]; then
+        if command -v wl-copy >/dev/null; then
+            wl-copy
+        else
+            xclip -selection clipboard
+        fi
+    elif [[ "$OS" == "Darwin" ]]; then
+        pbcopy
+    fi
+}
+
+# Function to record and transcribe (single shot for GUI mode)
+record_and_transcribe() {
+    if [[ "$GUI_MODE" == true ]]; then
+        notify_user "🎤 Dictée Prête" "Appuyez sur n'importe quelle touche pour commencer l'enregistrement..." "critical"
+    else
+        echo "🎤 Enregistrement en cours... (appuie sur ENTRÉE pour arrêter)"
+    fi
+    
+    # Start recording in background
+    if [[ "$OS" == "Linux" ]]; then
+        arecord -f cd -t wav "$TMP" >/dev/null 2>&1 &
+    elif [[ "$OS" == "Darwin" ]]; then
+        ffmpeg -f avfoundation -i ":0" "$TMP" -y >/dev/null 2>&1 &
+    else
+        if [[ "$GUI_MODE" == true ]]; then
+            notify_user "❌ Erreur" "OS non supporté"
+        else
+            echo "❌ OS non supporté"
+        fi
+        exit 1
+    fi
+    
+    RECORDING_PID=$!
+    
+    # Small delay to ensure recording starts
+    sleep 0.2
+    
+    if [[ "$GUI_MODE" == true ]]; then
+        notify_user "🔴 ENREGISTREMENT" "Parlez maintenant... Appuyez sur une touche pour arrêter" "critical"
+    fi
+    
+    # Wait for user to stop
+    if [[ "$GUI_MODE" == true ]]; then
+        read -n 1 -s  # Wait for any single key press
+    else
+        read -r       # Wait for Enter
+    fi
+    
+    # Stop recording
+    kill "$RECORDING_PID" 2>/dev/null || true
+    wait "$RECORDING_PID" 2>/dev/null || true
+    
+    if [[ -f "$TMP" ]]; then
+        if [[ "$GUI_MODE" == true ]]; then
+            notify_user "🧠 Traitement" "Transcription en cours... Patientez..."
+        else
+            echo "🧠 Transcription rapide..."
+        fi
+        
+        # Quick transcription with timeout
+        TEXT="$(timeout 15s "$WHISPER" -m "$MODEL" -f "$TMP" -l fr -nt 2>/dev/null | tail -n 1 || echo '')"
+        
+        if [[ -n "$TEXT" && "$TEXT" != *"error"* ]]; then
+            if [[ "$GUI_MODE" == true ]]; then
+                printf "%s" "$TEXT" | copy_clipboard
+                notify_user "✅ Succès!" "$TEXT" "low"
+                notify_user "📋 Copié" "Texte dans le presse-papier!" "low"
+            else
+                echo "📝 Transcrit: $TEXT"
+                printf "%s" "$TEXT" | copy_clipboard
+                echo "📋 Copié dans le presse-papier!"
+            fi
+        else
+            if [[ "$GUI_MODE" == true ]]; then
+                notify_user "⚠️ Aucun Résultat" "Pas de texte détecté. Réessayez." "normal"
+            else
+                echo "⚠️ Aucun texte détecté ou erreur de transcription"
+            fi
+        fi
+        
+        rm -f "$TMP"
+    else
+        if [[ "$GUI_MODE" == true ]]; then
+            notify_user "⚠️ Pas d'Audio" "Aucun enregistrement détecté" "normal"
+        else
+            echo "⚠️ Pas d'audio enregistré"
+        fi
+    fi
+}
+
+# Main execution
+if [[ "$GUI_MODE" == true ]]; then
+    # GUI Mode: Toggle recording with same shortcut
+    if [[ -f "$LOCK_FILE" ]]; then
+        # Currently recording - STOP recording
+        if [[ -f "$PID_FILE" ]]; then
+            RECORDING_PID=$(cat "$PID_FILE")
+            if kill -0 "$RECORDING_PID" 2>/dev/null; then
+                notify_user "🛑 Arrêt" "Arrêt de l'enregistrement..." "critical"
+                
+                # Stop the recording process
+                kill "$RECORDING_PID" 2>/dev/null || true
+                wait "$RECORDING_PID" 2>/dev/null || true
+                
+                # Clean up state files
+                rm -f "$LOCK_FILE" "$PID_FILE"
+                
+                # Process the recording
+                if [[ -f "$TMP" && -s "$TMP" ]]; then
+                    notify_user "🧠 Traitement" "Transcription en cours..." "normal"
+                    
+                    # Quick transcription with timeout
+                    TEXT="$(timeout 15s "$WHISPER" -m "$MODEL" -f "$TMP" -l fr -nt 2>/dev/null | tail -n 1 || echo '')"
+                    
+                    if [[ -n "$TEXT" && "$TEXT" != *"error"* ]]; then
+                        printf "%s" "$TEXT" | copy_clipboard
+                        notify_user "✅ Succès!" "$TEXT" "low"
+                        notify_user "📋 Copié" "Texte dans le presse-papier!" "low"
+                    else
+                        notify_user "⚠️ Aucun Résultat" "Pas de texte détecté." "normal"
+                    fi
+                else
+                    notify_user "⚠️ Pas d'Audio" "Aucun enregistrement détecté" "normal"
+                fi
+                
+                # Clean up
+                rm -f "$TMP"
+            else
+                # Process is dead but lock exists, clean up
+                rm -f "$LOCK_FILE" "$PID_FILE" "$TMP"
+                notify_user "⚠️ Erreur" "Processus d'enregistrement introuvable" "normal"
+            fi
+        else
+            # Lock exists but no PID file
+            rm -f "$LOCK_FILE" "$TMP"
+            notify_user "⚠️ Erreur" "État d'enregistrement incohérent" "normal"
+        fi
+    else
+        # Not recording - START recording
+        notify_user "🔴 Enregistrement" "Enregistrement démarré... Raccourci à nouveau pour arrêter" "critical"
+        
+        # Remove any existing temp file
+        rm -f "$TMP"
+        
+        # Start recording in background
+        if [[ "$OS" == "Linux" ]]; then
+            arecord -f cd -t wav "$TMP" >/dev/null 2>&1 &
+        elif [[ "$OS" == "Darwin" ]]; then
+            ffmpeg -f avfoundation -i ":0" "$TMP" -y >/dev/null 2>&1 &
+        else
+            notify_user "❌ Erreur" "OS non supporté"
+            exit 1
+        fi
+        
+        RECORDING_PID=$!
+        
+        # Create state files
+        echo "$RECORDING_PID" > "$PID_FILE"
+        touch "$LOCK_FILE"
+        
+        # Small delay to ensure recording starts
+        sleep 0.3
+        notify_user "🎤 En cours..." "Parlez maintenant... Raccourci pour arrêter" "low"
+    fi
+else
+    # CLI Mode: Interactive loop (unchanged)
+    echo "🎤 Push-to-talk rapide (Ctrl+C pour quitter)"
+    echo "   Mode: Appuie sur ENTRÉE pour commencer, ENTRÉE pour arrêter"
+    echo "   Tip: Utilise 'dictate --gui' pour le mode système raccourci"
+    
+    while true; do
+        echo ""
+        printf "💬 Appuie sur ENTRÉE pour commencer l'enregistrement..."
+        read -r
+        record_and_transcribe
+    done
+fi
