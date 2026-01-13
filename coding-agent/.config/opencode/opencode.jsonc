@@ -1,0 +1,79 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    // Theme - matches your terminal aesthetic
+    "theme": "tokyonight",
+    // Auto-update OpenCode
+    "autoupdate": true,
+    // Default model
+    "model": "anthropic/claude-sonnet-4-20250514",
+    // Permissions - allow safe operations, ask for destructive ones
+    "permission": {
+        "edit": "allow",
+        "bash": {
+            // Safe read-only commands
+            "git status": "allow",
+            "git diff": "allow",
+            "git log": "allow",
+            "ls": "allow",
+            "cat": "allow",
+            "find": "allow",
+            "grep": "allow",
+            "pwd": "allow",
+            // Build/test commands
+            "npm run": "allow",
+            "npm test": "allow",
+            "mvn": "allow",
+            "gradle": "allow",
+            "cargo": "allow",
+            "go": "allow",
+            // Require approval for destructive git ops
+            "git push": "ask",
+            "git reset": "ask",
+            "git rebase": "ask",
+            "npm install": "ask",
+            "rm": "ask"
+        }
+    },
+    // File watcher - ignore noisy directories
+    "watcher": {
+        "ignore": [
+            "node_modules/**",
+            "dist/**",
+            "build/**",
+            "target/**",
+            ".git/**",
+            ".idea/**",
+            ".vscode/**",
+            "__pycache__/**",
+            "*.pyc"
+        ]
+    },
+    // MCP servers
+    "mcp": {
+        "context7": {
+            "type": "remote",
+            "url": "https://mcp.context7.com/mcp",
+            "enabled": true
+        }
+    },
+    // Custom providers
+    "provider": {
+        "ollama": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "Ollama (local)",
+            "options": {
+                "baseURL": "http://localhost:11434/v1"
+            },
+            "models": {
+                "devstral:ctx": {
+                    "name": "devstral:ctx"
+                }
+            }
+        }
+    },
+    // Keybinds - Shift+Enter works by default, but explicit for clarity
+    "keybinds": {
+        "input_newline": "shift+return,ctrl+return,ctrl+j",
+        "input_submit": "return"
+    }
+}
