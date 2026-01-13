@@ -119,3 +119,52 @@ fi
 
 # opencode
 export PATH=/home/jo-pouradier/.opencode/bin:$PATH
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc'; fi
+
+# GIT 
+commit() {
+  local regex="^(feature|feat|tech|bugfix|fix|release)\/(CONNECT-[0-9]+)-(.*)"
+  local branchRegex="^(.*)/(.*)"
+  local branch=$(git branch --show-current)
+
+  if [[ $branch =~ $regex ]]; then
+    # Extract branch type and ticket number
+    local branchType="${BASH_REMATCH[1]}"
+    local ticket="${BASH_REMATCH[2]}"
+
+    # Map branch type to conventional commit type
+    local commitType
+    case "$branchType" in
+      feature|feat)
+        commitType="feat"
+        ;;
+      bugfix|fix)
+        commitType="fix"
+        ;;
+      tech)
+        commitType="tech"
+        ;;
+      release)
+        commitType="release"
+        ;;
+      *)
+        commitType="chore"
+        ;;
+    esac
+
+    # Conventional commit format: type(scope): description
+    git commit -m "$commitType($ticket): $1"
+
+  elif [[ $branch =~ $branchRegex ]]; then
+    # No CONNECT ticket found
+    git commit -m "chore: $1"
+  else
+    # Default case
+    git commit -m "chore: $1"
+  fi
+}
+
