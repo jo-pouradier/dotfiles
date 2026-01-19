@@ -3,6 +3,7 @@
 export EDITOR='nvim'
 export PATH=$PATH:~/.local/scripts/
 export PATH=$PATH:~/.volta/bin/
+export PATH=$PATH:~/.cargo/bin/
 
 # Set Zinit path 
 zstyle ':zinit:plugin:*' cdclear 'no'

@@ -8,18 +8,11 @@ sudo dnf autoremove -y
 echo "Updating Flatpaks..."
 flatpak update -y
 
-# echo "Updating Python CLI (pipx)..."
-# pipx upgrade-all
-
 echo "Updating NodeJS CLI (pnpm)..."
 pnpm update -g
 
 echo "Updating Rust tools..."
 rustup update
-cargo install-update -a
-
-echo "Updating Go tools..."
-go install golang.org/x/tools/gopls@latest
 
 echo "Update OpenCode..."
 opencode upgrade
