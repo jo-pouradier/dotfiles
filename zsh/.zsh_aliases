@@ -1,10 +1,10 @@
 alias plz='sudo'
 
-alias ls='ls --color'
 alias n='nvim'
 
 
 # ls
+alias ls='ls --color'
 alias la='ls -a'
 alias ll='ls -lh'
 alias lal='ls -lah'
@@ -14,3 +14,5 @@ alias cl='clear'
 alias tse='tmux-sessionizer'
 alias ta='tmux a'
 alias tt='tig --all'
+
+alias oc='opencode'

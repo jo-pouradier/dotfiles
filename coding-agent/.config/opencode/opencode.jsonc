@@ -54,6 +54,23 @@
             "type": "remote",
             "url": "https://mcp.context7.com/mcp",
             "enabled": true
+        },
+        "atlassian" : {
+            "enabled": true,
+            "type": "remote",
+            "url": "https://mcp.atlassian.com/v1/mcp"
+        },
+        "github": {
+            "type": "remote",
+            "url": "https://api.githubcopilot.com/mcp/",
+            "headers": {
+                "Authorization": "Bearer {env:GITHUB_TOKEN_MCP_CLASSIC}"
+            },
+            "enabled": true
+        },
+        "chrome-devtools": {
+            "type": "local",
+            "command": ["npx", "chrome-devtools-mcp@latest"]
         }
     },
     // Custom providers
@@ -69,11 +86,19 @@
                     "name": "devstral:ctx"
                 }
             }
+        },
+        "google": {
+            "options": {
+                "projectId": "{env:GOOGLE_PROJECT_ID}"
+            }
         }
     },
+    "plugin": [
+        "opencode-gemini-auth@latest"
+    ],
     // Keybinds - Shift+Enter works by default, but explicit for clarity
     "keybinds": {
-        "input_newline": "shift+return,ctrl+return,ctrl+j",
+        "input_newline": "shift+enter,shift+return,ctrl+return,ctrl+j",
         "input_submit": "return"
     }
 }

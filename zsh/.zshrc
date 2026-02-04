@@ -168,3 +168,6 @@ commit() {
   fi
 }
 
+
+# Added by Antigravity
+export PATH="/Users/joseph.pouradier-duteil/.antigravity/antigravity/bin:$PATH"
