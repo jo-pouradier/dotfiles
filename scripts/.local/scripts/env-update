@@ -10,6 +10,8 @@ flatpak update -y
 
 # echo "Updating Python CLI (pipx)..."
 # pipx upgrade-all
+echo "Updating Snap..."
+sudo snap refresh
 
 echo "Updating NodeJS CLI (pnpm)..."
 pnpm update -g

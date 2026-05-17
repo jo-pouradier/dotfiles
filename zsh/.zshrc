@@ -2,6 +2,7 @@
 
 export EDITOR='nvim'
 export PATH=$PATH:~/.local/scripts/
+export PATH=$PATH:~/.local/bin/
 export PATH=$PATH:~/.volta/bin/
 export PATH="/Users/joseph.pouradier-duteil/.antigravity/antigravity/bin:$PATH"
 export PATH=/home/jo-pouradier/.opencode/bin:$PATH
