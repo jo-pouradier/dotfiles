@@ -104,6 +104,10 @@ nnoremap <leader>hn :action VcsShowNextChangeMarker<CR>
 nnoremap <leader>hN :action VcsShowPrevChangeMarker<CR>
 nnoremap <leader>hr :action Vcs.RollbackChangedLines<CR>
 nnoremap <leader>hR :action ChangesView.Revert<CR>
+vnoremap <leader>hh :action Vcs.ShowHistoryForBlock<CR>
+nnoremap <leader>hh :action Vcs.ShowTabbedFileHistory<CR>
+
+
 " Runnable
 nnoremap <leader>rp :action Run<CR>
 nnoremap <leader>rr :action Rerun<CR>
@@ -143,7 +147,7 @@ nnoremap <leader>di :action StepInto<CR>
 " Utils
 nnoremap <leader>rv :action IdeaVim.ReloadVimRc.reload<CR>
 nnoremap <leader>T :action ActivateTerminalToolWindow<CR>
-" inoremap <leader>K :action ParameterInfo<CR>
+nnoremap <leader>K :action ParameterInfo<CR>
 
 " Plugins:
 Plug 'tpope/vim-commentary'

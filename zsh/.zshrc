@@ -6,6 +6,8 @@ export PATH=$PATH:~/.local/bin/
 export PATH=$PATH:~/.volta/bin/
 export PATH="/Users/joseph.pouradier-duteil/.antigravity/antigravity/bin:$PATH"
 export PATH=/home/jo-pouradier/.opencode/bin:$PATH
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
 
 # Set Zinit path 
 zstyle ':zinit:plugin:*' cdclear 'no'
@@ -121,6 +123,8 @@ if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/op
 
 
 # GIT 
+alias amend="git commit --amend"
+
 commit() {
   local tags="feature|feat|fix|bugfix|bug|tech|release|chore|refacto"
   local regex="^($tags)/(CONNECT-[0-9]+)-(.*)"
@@ -143,3 +147,6 @@ commit() {
 ## END
 # load specific file for env variable and specific to machines
 [[ -f ~/.zsh_local ]] && source ~/.zsh_local
+
+# Created by `pipx` on 2026-06-15 09:48:32
+export PATH="$PATH:/Users/joseph.pouradier-duteil/.local/bin"

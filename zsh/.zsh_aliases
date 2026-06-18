@@ -1,18 +1,24 @@
 alias plz='sudo'
 
-alias n='nvim'
-
-
-# ls
+# LS
 alias ls='ls --color'
 alias la='ls -a'
 alias ll='ls -lh'
 alias lal='ls -lah'
 
-alias cl='clear'
 
+# TMUX
 alias tse='tmux-sessionizer'
 alias ta='tmux a'
 alias tt='tig --all'
 
+
+# GIT 
+alias grbim='git fetch -a && git rebase -i main'
+alias grbiM='git fetch -a && git rebase -i master'
+
+# UTILS
 alias oc='opencode'
+alias bubu="brew update && brew upgrade -y"
+alias n='nvim'
+alias cl='clear'
