@@ -1,2 +1,5 @@
 tmux/.config/tmux/plugins/**
 *.log
+
+# use skills cli with symlinks
+/coding-agent/.claude/skills
