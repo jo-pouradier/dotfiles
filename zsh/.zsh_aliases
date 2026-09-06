@@ -14,8 +14,8 @@ alias tt='tig --all'
 
 
 # GIT 
-alias grbim='git fetch -a && git rebase -i main'
-alias grbiM='git fetch -a && git rebase -i master'
+alias grbim='gsw $(git_main_branch) && git pull --rebase && gsw - && git rebase -i $(git_main_branch)'
+alias grpo='git remote prune origin'
 
 # UTILS
 alias oc='opencode'

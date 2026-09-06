@@ -144,6 +144,10 @@ commit() {
   fi
 }
 
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init --cmd cd zsh)"
+fi
+
 ## END
 # load specific file for env variable and specific to machines
 [[ -f ~/.zsh_local ]] && source ~/.zsh_local
