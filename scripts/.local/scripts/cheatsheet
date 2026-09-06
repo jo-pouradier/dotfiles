@@ -1,40 +1,54 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
-# NOTE:
-# from: https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-cht.sh
-# with bette tmux capabilities
+# Based on https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-cht.sh
 
-curl_cht () {
-  if [[ -z $TMUX ]]; then
-    eval "$1"
+if (( $# == 0 )) && [[ -n ${TMUX:-} && ${CHEATSHEET_POPUP:-} != 1 ]]; then
+  printf -v popup_command 'CHEATSHEET_POPUP=1 %q' "$0"
+  tmux display-popup -E -w 65% -h 50% -d '#{pane_current_path}' "$popup_command"
+  exit
+fi
+
+if [[ ${1:-} == --show ]]; then
+  shift
+  request=$*
+elif (( $# == 0 )); then
+  header=$'cheat.sh query syntax\n\nTool page       tar\nTool search     tar~extract archive\nLanguage query  python/reverse a list\nSpecial pages   :help  :list  :learn\n\nPress Enter to search or Esc to close'
+  printf -v show_command '%q --show {q}' "$0"
+
+  exec fzf \
+    --disabled \
+    --layout=default \
+    --info=hidden \
+    --no-scrollbar \
+    --pointer='' \
+    --marker='' \
+    --border=rounded \
+    --border-label=' cheat.sh ' \
+    --header="$header" \
+    --header-first \
+    --header-border=none \
+    --input-border=rounded \
+    --input-label=' Query ' \
+    --prompt='' \
+    --ghost='e.g. git~undo last commit' \
+    --bind="enter:become($show_command)" < /dev/null
+else
+  topic=$1
+  shift
+
+  if (( $# == 0 )); then
+    request=$topic
   else
-    tmux neww bash -c "$1"
+    query=$*
+    if [[ $topic == */ || $topic == *~ ]]; then
+      request="${topic}${query}"
+    else
+      request="${topic}~${query}"
+    fi
   fi
-}
-
-languages=`echo "python go javascript typescript bash css html java" | tr ' ' '\n'`
-utils=`echo "jq find xargs tmux nvim curl less tar zip maven podman docker" | tr ' ' '\n'`
-
-# set the fzf command if in tmux or not
-fzf_cmd="fzf"
-if [[ ! -z $TMUX ]]; then
-  fzf_cmd="fzf-tmux -h 80% -w 50%"
 fi
 
-# select the tool in fzf
-selected=`printf "$languages\n$utils" | $fzf_cmd`
-if [[ -z $selected ]]; then
-    exit 0
-fi
+[[ -z ${request:-} ]] && exit
 
-read -p "Enter Query: " query
-
-# process the selected tool differ between utils and languages
-sep="~"
-if printf "$languages" | grep -qs "$selected"; then
-  query=`echo $query | tr ' ' '+'`
-  sep="/"
-fi
-
-curl_cht "curl -s cht.sh/$selected$sep$query | less -R"
-
+request=${request// /+}
+curl --globoff -fsSL "https://cht.sh/$request" | less -R
