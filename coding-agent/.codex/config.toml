@@ -1,14 +1,17 @@
 model_provider = "openrouter"
-model_reasoning_effort = "high"
-model="openai/gpt-5.6-luna"
+model_reasoning_effort = "xhigh"
+model="gpt-5.6-luna"
 
 [model_providers.openrouter]
 name = "openrouter"
 base_url="https://openrouter.ai/api/v1"
 
 [model_providers.openrouter.auth]
-command = "zsh"
+command = "sh"
 args = ["-c", "echo $OPENROUTER_API_KEY_CODEX"]
 
 [projects."/Users/joseph.pouradier-duteil/Desktop/workspace/personal/dotfiles"]
-trust_level = "trusted"
+ trust_level = "trusted"
+
+[mcp_servers.atlassian]
+url = "https://mcp.atlassian.com/v2/mcp"
