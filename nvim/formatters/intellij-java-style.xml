@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  IntelliJ-style Eclipse formatter profile for JDT.LS.
+  Matches IntelliJ IDEA "Default" Java code style as of 2024+:
+    * 4-space indent (no tabs)
+    * 140-char line width
+    * K&R braces (opening brace at end of line)
+    * Don't align fields in columns
+    * Don't keep simple methods/loops/ifs on one line
+    * Blank line before package, between imports groups, around methods
+    * `else`/`catch`/`finally` stay on the line after the closing brace
+  Drop your own IDE-exported XML over this file if you want exact parity.
+  Profile name must match `java.format.settings.profile` in jdtls config.
+-->
+<profiles version="22">
+<profile kind="CodeFormatterProfile" name="IntelliJStyle" version="22">
+
+<!--
+  Indentation: 4 spaces, no tabs. Continuation = 1 indent unit (= 4 spaces),
+  matching Google Java Style (which our project's checkstyle extends). Set
+  this to 2 if you want IntelliJ's default 8-space continuation instead.
+-->
+<setting id="org.eclipse.jdt.core.formatter.tabulation.char" value="space"/>
+<setting id="org.eclipse.jdt.core.formatter.tabulation.size" value="4"/>
+<setting id="org.eclipse.jdt.core.formatter.indentation.size" value="4"/>
+<setting id="org.eclipse.jdt.core.formatter.continuation_indentation" value="1"/>
+<setting id="org.eclipse.jdt.core.formatter.continuation_indentation_for_array_initializer" value="1"/>
+<setting id="org.eclipse.jdt.core.formatter.use_tabs_only_for_leading_indentations" value="false"/>
+
+<!--
+  Line width: matches our checkstyle `<LineLength max="300"/>`. We pick 200
+  as the soft wrap target so the formatter has headroom but doesn't aggressively
+  break long ternaries / method chains the way a 140-char limit would.
+-->
+<setting id="org.eclipse.jdt.core.formatter.lineSplit" value="200"/>
+<setting id="org.eclipse.jdt.core.formatter.comment.line_length" value="200"/>
+
+<!-- Brace style: K&R / end-of-line -->
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_type_declaration" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_method_declaration" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_constructor_declaration" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_anonymous_type_declaration" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_block" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_block_in_case" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_switch" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_array_initializer" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_enum_declaration" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_enum_constant" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_annotation_type_declaration" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_lambda_body" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_record_declaration" value="end_of_line"/>
+<setting id="org.eclipse.jdt.core.formatter.brace_position_for_record_constructor" value="end_of_line"/>
+
+<!-- Keep `else`/`catch`/`finally`/`while` on the same line as `}` -->
+<setting id="org.eclipse.jdt.core.formatter.keep_else_statement_on_same_line" value="false"/>
+<setting id="org.eclipse.jdt.core.formatter.keep_then_statement_on_same_line" value="false"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_new_line_before_else_in_if_statement" value="do not insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_new_line_before_catch_in_try_statement" value="do not insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_new_line_before_finally_in_try_statement" value="do not insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_new_line_before_while_in_do_statement" value="do not insert"/>
+
+<!-- Don't try to keep blocks/statements on a single line -->
+<setting id="org.eclipse.jdt.core.formatter.keep_simple_if_on_one_line" value="false"/>
+<setting id="org.eclipse.jdt.core.formatter.keep_imple_for_body_on_same_line" value="false"/>
+<setting id="org.eclipse.jdt.core.formatter.keep_simple_while_body_on_same_line" value="false"/>
+<setting id="org.eclipse.jdt.core.formatter.keep_simple_do_while_body_on_same_line" value="false"/>
+
+<!-- Empty bodies on the same line ({}) -->
+<setting id="org.eclipse.jdt.core.formatter.insert_new_line_in_empty_method_body" value="do not insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_new_line_in_empty_block" value="do not insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_new_line_in_empty_type_declaration" value="do not insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_new_line_in_empty_anonymous_type_declaration" value="do not insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_new_line_in_empty_enum_constant" value="do not insert"/>
+
+<!-- Don't align variable declarations in columns (IntelliJ default off) -->
+<setting id="org.eclipse.jdt.core.formatter.align_type_members_on_columns" value="false"/>
+<setting id="org.eclipse.jdt.core.formatter.align_variable_declarations_on_columns" value="false"/>
+<setting id="org.eclipse.jdt.core.formatter.align_assignment_statements_on_columns" value="false"/>
+
+<!-- Blank lines -->
+<setting id="org.eclipse.jdt.core.formatter.blank_lines_before_package" value="0"/>
+<setting id="org.eclipse.jdt.core.formatter.blank_lines_after_package" value="1"/>
+<setting id="org.eclipse.jdt.core.formatter.blank_lines_before_imports" value="1"/>
+<!-- Two blank lines between the last import and the class declaration. -->
+<setting id="org.eclipse.jdt.core.formatter.blank_lines_after_imports" value="2"/>
+<setting id="org.eclipse.jdt.core.formatter.blank_lines_between_import_groups" value="1"/>
+<setting id="org.eclipse.jdt.core.formatter.blank_lines_before_method" value="1"/>
+<setting id="org.eclipse.jdt.core.formatter.blank_lines_before_field" value="0"/>
+<setting id="org.eclipse.jdt.core.formatter.blank_lines_before_first_class_body_declaration" value="0"/>
+<setting id="org.eclipse.jdt.core.formatter.blank_lines_before_member_type" value="1"/>
+<setting id="org.eclipse.jdt.core.formatter.blank_lines_between_type_declarations" value="1"/>
+<setting id="org.eclipse.jdt.core.formatter.number_of_empty_lines_to_preserve" value="1"/>
+
+<!-- Spacing -->
+<setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_method_invocation_arguments" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_method_declaration_parameters" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_array_initializer" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_for_inits" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_for_increments" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_type_arguments" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_type_parameters" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_constructor_declaration_parameters" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_before_opening_brace_in_method_declaration" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_before_opening_brace_in_type_declaration" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_before_opening_brace_in_block" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_before_opening_brace_in_array_initializer" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_after_opening_brace_in_array_initializer" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_before_closing_brace_in_array_initializer" value="insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_before_opening_paren_in_method_declaration" value="do not insert"/>
+<setting id="org.eclipse.jdt.core.formatter.insert_space_before_opening_paren_in_method_invocation" value="do not insert"/>
+
+<!-- Comments -->
+<setting id="org.eclipse.jdt.core.formatter.comment.format_javadoc_comments" value="true"/>
+<setting id="org.eclipse.jdt.core.formatter.comment.format_block_comments" value="true"/>
+<setting id="org.eclipse.jdt.core.formatter.comment.format_line_comments" value="false"/>
+<setting id="org.eclipse.jdt.core.formatter.comment.indent_parameter_description" value="true"/>
+<setting id="org.eclipse.jdt.core.formatter.comment.indent_root_tags" value="true"/>
+<setting id="org.eclipse.jdt.core.formatter.comment.preserve_white_space_between_code_and_line_comments" value="true"/>
+<setting id="org.eclipse.jdt.core.formatter.never_indent_line_comments_on_first_column" value="true"/>
+<setting id="org.eclipse.jdt.core.formatter.never_indent_block_comments_on_first_column" value="true"/>
+
+<!--
+  Parentheses placement: when arguments DO wrap across multiple lines, keep
+  the closing `)` on its own line (i.e. don't merge `arg\n    );` into
+  `arg);`). When everything fits on a single line the parens stay glued.
+-->
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_method_invocation" value="separate_lines_if_wrapped"/>
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_method_declaration" value="separate_lines_if_wrapped"/>
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_enum_constant_declaration" value="separate_lines_if_wrapped"/>
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_annotation" value="separate_lines_if_wrapped"/>
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_record_declaration" value="separate_lines_if_wrapped"/>
+
+<!-- Wrapping policy: IntelliJ-ish (only wrap when necessary, then indent) -->
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_method_invocation" value="16"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_parameters_in_method_declaration" value="16"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_allocation_expression" value="16"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_selector_in_method_invocation" value="16"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_throws_clause_in_method_declaration" value="16"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_assignment" value="16"/>
+<setting id="org.eclipse.jdt.core.formatter.alignment_for_conditional_expression" value="80"/>
+
+<!-- Switch -->
+<setting id="org.eclipse.jdt.core.formatter.indent_switchstatements_compare_to_switch" value="true"/>
+<setting id="org.eclipse.jdt.core.formatter.indent_switchstatements_compare_to_cases" value="true"/>
+<setting id="org.eclipse.jdt.core.formatter.indent_breaks_compare_to_cases" value="true"/>
+</profile>
+</profiles>
