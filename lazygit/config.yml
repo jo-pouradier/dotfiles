@@ -83,11 +83,10 @@ gui:
   switchToFilesAfterStashApply: true
   switchTabsWithPanelJumpKeys: false
 git:
-  paging:
-    colorArg: always
-    pager: ""
-    useConfig: false
-    externalDiffCommand: ""
+  diffRenderers:
+    - colorArg: always
+      useConfig: false
+      type: rawGit
   commit:
     signOff: false
     autoWrapCommitMessage: true
@@ -211,6 +210,7 @@ keybinding:
     increaseRenameSimilarityThreshold: )
     decreaseRenameSimilarityThreshold: (
     openDiffTool: <c-t>
+    newWorktree: w
   status:
     checkForUpdate: u
     recentRepos: <enter>
@@ -230,7 +230,7 @@ keybinding:
     viewResetOptions: D
     fetch: f
     toggleTreeView: '`'
-    openMergeTool: M
+    openMergeOptions: M
     openStatusFilter: <c-b>
     copyFileInfoToClipboard: "y"
     collapseAll: '-'
@@ -251,8 +251,6 @@ keybinding:
     setUpstream: u
     fetchRemote: f
     sortOrder: s
-  worktrees:
-    viewWorktreeOptions: w
   commits:
     squashDown: s
     renameCommit: r
@@ -272,7 +270,7 @@ keybinding:
     markCommitAsBaseForRebase: B
     tagCommit: T
     checkoutCommit: <space>
-    resetCherryPick: <c-R>
+    resetCherryPick: <c-shift-r>
     copyCommitAttributeToClipboard: "y"
     openLogMenu: <c-l>
     openInBrowser: o

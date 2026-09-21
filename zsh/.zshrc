@@ -3,11 +3,16 @@
 export EDITOR='nvim'
 export PATH=$PATH:~/.local/scripts/
 export PATH=$PATH:~/.local/bin/
-export PATH=$PATH:~/.volta/bin/
 export PATH="/Users/joseph.pouradier-duteil/.antigravity/antigravity/bin:$PATH"
 export PATH=/home/jo-pouradier/.opencode/bin:$PATH
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
+
+# mise manages node/go/python/java/lazygit/starship/zoxide/fzf versions
+# (see mise.toml) — replaces volta/sdkman/pipx-per-tool version pinning
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
 
 # Set Zinit path 
 zstyle ':zinit:plugin:*' cdclear 'no'
@@ -90,12 +95,6 @@ if command -v starship >/dev/null 2>&1; then
   export STARSHIP_CONFIG=~/.config/starship/starship.toml
 fi
 
-if [ -f ~/.sdkman/bin/sdkman-init.sh ]; then
-  source "$HOME/.sdkman/bin/sdkman-init.sh"
-else
-  echo "sdkman is not installed, you should install it!"
-fi
-
 # Deferred zinit cdreplay for better startup
 zinit cdreplay -q
 
@@ -127,7 +126,9 @@ alias amend="git commit --amend"
 
 commit() {
   local tags="feature|feat|fix|bugfix|bug|tech|release|chore|refacto"
-  local regex="^($tags)/(CONNECT-[0-9]+)-(.*)"
+  # override COMMIT_TICKET_PREFIX in ~/.zsh_local for a company-specific ticket format (e.g. "CONNECT")
+  local ticketPrefix="${COMMIT_TICKET_PREFIX:-[A-Z]+}"
+  local regex="^($tags)/($ticketPrefix-[0-9]+)-(.*)"
   local branchRegex="^($tags)/(.*)"
   local branch=$(git branch --show-current)
 

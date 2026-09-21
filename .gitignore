@@ -1,5 +1,9 @@
-tmux/.config/tmux/plugins/**
+tmux/plugins/**
 *.log
 
 # use skills cli with symlinks
 /coding-agent/.claude/skills
+
+# machine/distro-specific overrides — see mise.local.toml.example
+/mise.local.toml
+/scripts/install/linux.local.sh

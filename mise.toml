@@ -1,0 +1,103 @@
+# Tool versions and dotfiles managed by mise (https://mise.jdx.dev)
+# Cross-platform (macOS + Linux) -- bootstrap with:
+# mise bootstrap --only dotfiles,tools
+#
+# Machine- or distro-specific tool needs (extra tools, version overrides,
+# OS-restricted entries) go in mise.local.toml -- see mise.local.toml.example.
+# mise loads it automatically alongside this file; it is gitignored.
+
+[tools]
+node = "lts"
+go = "latest"
+python = "latest"
+java = "zulu-25"
+rust = "latest"
+
+opencode = "latest"
+neovim = "0.12.5"
+gh = "latest"
+jq = "latest"
+lazygit = "latest"
+lazydocker = "latest"
+starship = "latest"
+zoxide = "latest"
+fzf = "latest"
+ripgrep = "latest"
+bat = "latest"
+
+[bootstrap.hooks]
+pre-dotfiles = 'git -C "{{ config_root }}" submodule update --init --recursive'
+
+[dotfiles."~/.zshrc"]
+source = "zsh/.zshrc"
+mode = "symlink"
+
+[dotfiles."~/.zsh_aliases"]
+source = "zsh/.zsh_aliases"
+mode = "symlink"
+
+[dotfiles."~/.ideavimrc"]
+source = "intellij/.ideavimrc"
+mode = "symlink"
+
+[dotfiles."~/.config/nvim"]
+source = "nvim"
+mode = "symlink"
+
+[dotfiles."~/.config/tmux"]
+source = "tmux"
+mode = "symlink-each"
+manifest = "git"
+
+[dotfiles."~/.config/starship"]
+source = "starship"
+mode = "symlink-each"
+manifest = "git"
+
+[dotfiles."~/.config/lazygit"]
+source = "lazygit"
+mode = "symlink-each"
+manifest = "git"
+
+[dotfiles."~/.config/ghostty"]
+source = "ghostty"
+mode = "symlink-each"
+manifest = "git"
+
+[dotfiles."~/.config/kitty"]
+source = "kitty"
+mode = "symlink-each"
+manifest = "git"
+
+[dotfiles."~/.local/scripts"]
+source = "scripts"
+mode = "symlink-each"
+manifest = "git"
+
+[dotfiles."~/.claude/agents"]
+source = "coding-agent/.claude/agents"
+mode = "symlink"
+
+[dotfiles."~/.claude/commands"]
+source = "coding-agent/.claude/commands"
+mode = "symlink"
+
+[dotfiles."~/.claude/mcp_servers.json"]
+source = "coding-agent/.claude/mcp_servers.json"
+mode = "symlink"
+
+[dotfiles."~/.claude/skills"]
+source = "coding-agent/.claude/skills"
+mode = "symlink"
+
+[dotfiles."~/.codex/config.toml"]
+source = "coding-agent/.codex/config.toml"
+mode = "symlink"
+
+[dotfiles."~/.config/opencode/agent"]
+source = "coding-agent/.config/opencode/agent"
+mode = "symlink"
+
+[dotfiles."~/.config/opencode/opencode.jsonc"]
+source = "coding-agent/.config/opencode/opencode.jsonc"
+mode = "symlink"

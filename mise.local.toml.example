@@ -1,0 +1,20 @@
+# Template for mise.local.toml — copy this file to mise.local.toml
+# (gitignored, never committed) for anything specific to one machine,
+# OS, or distro that doesn't belong in the shared mise.toml.
+#
+#   cp mise.local.toml.example mise.local.toml
+#
+# mise merges this in automatically on top of mise.toml.
+
+# Extra tool only needed on this machine:
+# [tools]
+# "pipx:some-personal-cli" = "latest"
+
+# Tool restricted to one OS (mise skips it elsewhere):
+# [tools.some-linux-only-tool]
+# version = "latest"
+# os = ["linux"]
+
+# Pin a different version than the shared default on this machine:
+# [tools]
+# node = "20"
