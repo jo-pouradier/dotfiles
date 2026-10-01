@@ -1,35 +1,23 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "autoupdate": true,
+    "update": "auto",
     "lsp": true,
-    "permission": {
-        "edit": "allow",
-        "bash": {
-            // Safe read-only commands
-            "git status": "allow",
-            "git diff": "allow",
-            "git log": "allow",
-            "ls": "allow",
-            "cat": "allow",
-            "find": "allow",
-            "grep": "allow",
-            "pwd": "allow",
-            "cd": "allow",
-            // Build/test commands
-            "npm run": "allow",
-            "npm test": "allow",
-            "mvn": "allow",
-            "gradle": "allow",
-            "cargo": "allow",
-            "go": "allow",
-            // Require approval for destructive git ops
-            "git push": "ask",
-            "git reset": "ask",
-            "git rebase": "ask",
-            "npm install": "ask",
-            "rm": "ask"
-        }
-    },
+    "permissions": [
+        { "action": "edit", "resource": "*", "effect": "allow" },
+        { "action": "read", "resource": "*", "effect": "allow" },
+        { "action": "glob", "resource": "*", "effect": "allow" },
+        { "action": "grep", "resource": "*", "effect": "allow" },
+        // Automode: allow all shell commands and outside-workspace access.
+        // Destructive ops below still ask (last match wins).
+        { "action": "shell", "resource": "*", "effect": "allow" },
+        { "action": "external_directory", "resource": "~/Desktop/workspace/*", "effect": "allow" },
+        // Require approval for destructive ops
+        { "action": "shell", "resource": "git push *", "effect": "ask" },
+        { "action": "shell", "resource": "git reset *", "effect": "ask" },
+        { "action": "shell", "resource": "git rebase *", "effect": "ask" },
+        { "action": "shell", "resource": "npm install *", "effect": "ask" },
+        { "action": "shell", "resource": "rm *", "effect": "ask" }
+    ],
     // File watcher - ignore noisy directories
     "watcher": {
         "ignore": [
@@ -46,38 +34,40 @@
     },
     // MCP servers
     "mcp": {
-        "figma": {
-            "type": "remote",
-            "url": "https://mcp.figma.com/mcp",
-            "enabled": true,
-            "oauth": {}
-        },
-        "context7": {
-            "type": "remote",
-            "url": "https://mcp.context7.com/mcp",
-            "enabled": true
-        },
-        "atlassian": {
-            "enabled": true,
-            "type": "remote",
-            "url": "https://mcp.atlassian.com/v1/mcp"
-        },
-        "chrome-devtools": {
-            "type": "local",
-            "command": [
-                "npx",
-                "chrome-devtools-mcp@latest"
-            ]
+        "servers": {
+            "figma": {
+                "type": "remote",
+                "url": "https://mcp.figma.com/mcp",
+                "disabled": false,
+                "oauth": {}
+            },
+            "context7": {
+                "type": "remote",
+                "url": "https://mcp.context7.com/mcp",
+                "disabled": false
+            },
+            "atlassian": {
+                "disabled": false,
+                "type": "remote",
+                "url": "https://mcp.atlassian.com/v1/mcp"
+            },
+            "chrome-devtools": {
+                "type": "local",
+                "command": [
+                    "npx",
+                    "chrome-devtools-mcp@latest"
+                ]
+            }
         }
     },
     // Custom providers
     "disabled_providers": [ "opencode"],
     "model": "deepseek/deepseek-v4.1-flash",
-    "provider": {
+    "providers": {
         "ollama": {
-            "npm": "@ai-sdk/openai-compatible",
+            "package": "aisdk:@ai-sdk/openai-compatible",
             // "name": "Ollama (local)",
-            "options": {
+            "settings": {
                 "baseURL": "http://localhost:11434/v1"
             },
             "models": {
@@ -86,9 +76,9 @@
             }
         },
         "llama": {
-            "npm": "@ai-sdk/openai-compatible",
+            "package": "aisdk:@ai-sdk/openai-compatible",
             "name": "llama.cpp (local)",
-            "options": {
+            "settings": {
                 "baseURL": "http://127.0.0.1:8080/v1"
             },
             "models": {
@@ -98,12 +88,12 @@
             }
         },
         "google": {
-            "options": {
+            "settings": {
                 "projectId": "{env:GOOGLE_PROJECT_ID}"
             }
         }
     },
-    "plugin": [
+    "plugins": [
         "opencode-gemini-auth@latest",
         "opencode-notifier"
     ]

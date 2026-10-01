@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "session": {
+    "sidebar": "auto",
+    "scrollbar": false,
+    "thinking": "show"
+  },
+  "animations": true,
+  "keybinds": {
+    "which-key.toggle": ["<leader>k", "ctrl+alt+k", "f1"]
+  },
+  "leader": {
+    "timeout": 2000
+  }
+}
