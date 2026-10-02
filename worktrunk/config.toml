@@ -1,0 +1,40 @@
+# Bare metadata lives at <repo>/.bare; each branch checkout lives at <repo>/<branch>.
+# A small <repo>/.git pointer file targets .bare so Git and Worktrunk can discover it.
+# Keep these overrides scoped to the repos being migrated to the bare layout.
+# The repository-local core.excludesfile points to worktrunk/ignore so IntelliJ
+# project state stays ignored even when a branch's own .gitignore omits .idea.
+[projects."github.com/mirakl/app-connect-*"]
+worktree-path = "{{ repo_path }}/../{{ branch }}"
+
+[projects."github.com/mirakl/app-connect-*".post-start]
+copy = "wt step copy-ignored --from={{ default_branch }}"
+
+[projects."github.com/mirakl/lib-connect-connector-channel-starter"]
+worktree-path = "{{ repo_path }}/../{{ branch }}"
+
+[projects."github.com/mirakl/lib-connect-connector-channel-starter".post-start]
+copy = "wt step copy-ignored --from={{ default_branch }}"
+
+[projects."github.com/mirakl/sandbox-connect-channel-integration"]
+worktree-path = "{{ repo_path }}/../{{ branch }}"
+
+[projects."github.com/mirakl/sandbox-connect-channel-integration".post-start]
+copy = "wt step copy-ignored --from={{ default_branch }}"
+
+# Keep Docker assets and local database state out of the initial copy workflow.
+[step.copy-ignored]
+exclude = [
+  "**/docker/**",
+  "**/Docker/**",
+  "**/.idea/dataSources*",
+  "**/.idea/data_source_mapping.xml",
+  "**/.idea/db-forest-config.xml",
+  "**/.claude/settings.local.json",
+  "**/*.sqlite",
+  "**/*.sqlite3",
+  "**/*.db",
+]
+
+# Personal tmux integration: the repo name is the session and the branch is the window.
+[post-switch]
+tmux = "~/.local/scripts/tmux-worktree-context {{ repo_path }} {{ branch }}"

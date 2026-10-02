@@ -210,7 +210,8 @@ keybinding:
     increaseRenameSimilarityThreshold: )
     decreaseRenameSimilarityThreshold: (
     openDiffTool: <c-t>
-    newWorktree: w
+    # Worktrunk owns worktree creation so bare-repo paths remain consistent.
+    newWorktree: <disabled>
   status:
     checkForUpdate: u
     recentRepos: <enter>

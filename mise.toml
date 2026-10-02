@@ -13,12 +13,12 @@ python = "latest"
 java = "zulu-25"
 rust = "latest"
 
-opencode = "latest"
 neovim = "0.12.5"
 gh = "latest"
 jq = "latest"
 lazygit = "latest"
 lazydocker = "latest"
+"cargo:worktrunk" = "latest"
 starship = "latest"
 zoxide = "latest"
 fzf = "latest"
@@ -40,6 +40,10 @@ mode = "symlink"
 source = "intellij/.ideavimrc"
 mode = "symlink"
 
+[dotfiles."~/.config/mise/config.toml"]
+source = "mise/config.toml"
+mode = "symlink"
+
 [dotfiles."~/.config/nvim"]
 source = "nvim"
 mode = "symlink"
@@ -56,6 +60,11 @@ manifest = "git"
 
 [dotfiles."~/.config/lazygit"]
 source = "lazygit"
+mode = "symlink-each"
+manifest = "git"
+
+[dotfiles."~/.config/worktrunk"]
+source = "worktrunk"
 mode = "symlink-each"
 manifest = "git"
 

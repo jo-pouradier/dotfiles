@@ -40,6 +40,8 @@ Source files stay as normal files in package directories. For example:
 tmux/tmux.conf             -> ~/.config/tmux/tmux.conf
 starship/starship.toml     -> ~/.config/starship/starship.toml
 scripts/tmux-sessionizer   -> ~/.local/scripts/tmux-sessionizer
+worktrunk/config.toml      -> ~/.config/worktrunk/config.toml
+mise/config.toml           -> ~/.config/mise/config.toml
 zsh/.zshrc                 -> ~/.zshrc
 ```
 

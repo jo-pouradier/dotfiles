@@ -42,6 +42,11 @@ checksum = "sha256:0f729b4b6f5f28d395c641eacc2e9ff68d0096b85aa0eec344aa62425144b
 url = "https://github.com/sharkdp/bat/releases/download/v0.26.1/bat-v0.26.1-x86_64-pc-windows-msvc.zip"
 url_api = "https://api.github.com/repos/sharkdp/bat/releases/assets/323549116"
 
+[[tools."cargo:worktrunk"]]
+version = "0.79.0"
+backend = "cargo:worktrunk"
+specifiers = ["latest"]
+
 [[tools.fzf]]
 version = "0.74.4"
 backend = "aqua:junegunn/fzf"

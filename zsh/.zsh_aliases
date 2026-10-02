@@ -22,3 +22,6 @@ alias oc='opencode'
 alias bubu="brew update && brew upgrade -y"
 alias n='nvim'
 alias cl='clear'
+
+# WORKTRUNK
+alias ws='wt switch --branches --remotes'

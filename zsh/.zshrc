@@ -49,7 +49,7 @@ bindkey '^n' history-search-forward
 
 skip_global_compinit=1
 autoload -Uz compinit
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
   compinit
 else
   compinit -C
@@ -68,12 +68,13 @@ zinit light zsh-users/zsh-autosuggestions
 # Bind key for autosuggestions after it's loaded
 bindkey '^y' autosuggest-accept
 # Syntax highlighting (load with higher wait time)
-zinit ice wait'2' atinit'zpcompinit; zpcdreplay' lucid
+zinit ice wait'2' atinit'zpcompinit; zpcdreplay; (( $+functions[_wt_lazy_complete] )) && compdef _wt_lazy_complete wt' lucid
 zinit light zsh-users/zsh-syntax-highlighting
 zinit ice wait'2' lucid
 zinit light zsh-users/zsh-completions
 zinit light Aloxaf/fzf-tab
 zstyle ':fzf-tab:completion:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:wt:*' fzf-preview 'git log --oneline --color=always -15 $word 2>/dev/null'
 zinit ice wait'3' lucid
 zinit light MichaelAquilina/zsh-you-should-use
 zinit snippet OMZP::git
@@ -93,6 +94,10 @@ fi
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
   export STARSHIP_CONFIG=~/.config/starship/starship.toml
+fi
+
+if command -v wt >/dev/null 2>&1; then
+  eval "$(wt config shell init zsh)"
 fi
 
 # Deferred zinit cdreplay for better startup

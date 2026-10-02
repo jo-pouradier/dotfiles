@@ -94,7 +94,6 @@
         }
     },
     "plugins": [
-        "opencode-gemini-auth@latest",
-        "opencode-notifier"
+        "@datadog/opencode-plugin"
     ]
 }
