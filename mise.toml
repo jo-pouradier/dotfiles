@@ -24,6 +24,7 @@ zoxide = "latest"
 fzf = "latest"
 ripgrep = "latest"
 bat = "latest"
+tlrc = "latest"
 
 [bootstrap.hooks]
 pre-dotfiles = 'git -C "{{ config_root }}" submodule update --init --recursive'
@@ -101,10 +102,6 @@ mode = "symlink"
 
 [dotfiles."~/.codex/config.toml"]
 source = "coding-agent/.codex/config.toml"
-mode = "symlink"
-
-[dotfiles."~/.config/opencode/agent"]
-source = "coding-agent/.config/opencode/agent"
 mode = "symlink"
 
 [dotfiles."~/.config/opencode/opencode.jsonc"]

@@ -2,7 +2,7 @@
 # A small <repo>/.git pointer file targets .bare so Git and Worktrunk can discover it.
 # Keep these overrides scoped to the repos being migrated to the bare layout.
 # The repository-local core.excludesfile points to worktrunk/ignore so IntelliJ
-# project state stays ignored even when a branch's own .gitignore omits .idea.
+# project and run configurations stay ignored and can be copied to new worktrees.
 [projects."github.com/mirakl/app-connect-*"]
 worktree-path = "{{ repo_path }}/../{{ branch }}"
 

@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+# tmux-tldr -- fuzzy-pick a CLI tool and read its tldr page.
+#
+# Opens an fzf menu of the available tldr pages; the selected page is rendered
+# with a colorized preview and opened in the pager. When run from tmux the whole
+# thing happens inside a popup (same idea as tmux-sessionizer and cheatsheet).
+#
+# Requires: tldr (tlrc), fzf, and optionally tmux + less.
+#
+# Usage:
+#   tmux-tldr          # pick from the list of pages
+#   tmux-tldr <tool>   # open a page directly
+
+TLDR_BIN="${TLDR_BIN:-tldr}"
+# Do NOT use `less -F` here: tldr pages are short, so -F would make the pager
+# exit immediately, which in turn closes the `display-popup -E` popup right
+# away (the page only flashes). We want `less` to wait until the user quits.
+PAGER="${PAGER:-less -R}"
+
+# Resolve our own path so the popup can re-exec us even from a relative/`PATH`
+# invocation.
+self=$(command -v -- "$0" 2>/dev/null || printf '%s' "$0")
+case $self in
+  /*) ;;
+  *) self=$(cd -- "$(dirname -- "$self")" && pwd)/$(basename -- "$self") ;;
+esac
+
+# Re-exec inside a tmux popup when we are in tmux and not already in one.
+if [[ -n ${TMUX:-} && ${TMUX_TLDR_POPUP:-} != 1 ]]; then
+  printf -v popup_command 'TMUX_TLDR_POPUP=1 %q' "$self"
+  for arg in "$@"; do
+    printf -v popup_command '%s %q' "$popup_command" "$arg"
+  done
+  tmux display-popup -E -w 85% -h 80% -d '#{pane_current_path}' "$popup_command"
+  exit $?
+fi
+
+# Keep the popup visible for a moment on error instead of flashing closed.
+fail() {
+  printf 'tmux-tldr: %s\n' "$*" >&2
+  [[ -n ${TMUX_TLDR_POPUP:-} ]] && sleep 3
+  exit 1
+}
+
+tldr_cmd=$(command -v "$TLDR_BIN") || fail "$TLDR_BIN not found"
+
+# Direct page: tmux-tldr <tool>
+if (( $# > 0 )); then
+  "$tldr_cmd" --color always "$@" 2>&1 | $PAGER
+  exit $?
+fi
+
+command -v fzf >/dev/null 2>&1 || fail 'fzf not found'
+
+# Only keep tool-like page names (drop shell-operator/special pages such as
+# `$`, `!`, `((`). It also keeps fzf's raw `{}` substitution shell-safe.
+page_filter='^[A-Za-z0-9][A-Za-z0-9._+-]*$'
+
+printf -v preview '%q --color always {}' "$tldr_cmd"
+printf -v open '%q --color always {} | %s' "$tldr_cmd" "$PAGER"
+printf -v reload '%q --update >/dev/null 2>&1; %q --list 2>/dev/null | grep -E %q' \
+  "$tldr_cmd" "$tldr_cmd" "$page_filter"
+
+header=$'Pick a CLI tool to read its tldr page\n\nEnter: open   Ctrl-/: toggle preview   Ctrl-r: update cache   Esc: close'
+
+"$tldr_cmd" --list 2>/dev/null | grep -E "$page_filter" | fzf \
+  --ansi \
+  --layout=reverse \
+  --border=rounded \
+  --border-label=' tldr ' \
+  --header="$header" \
+  --header-first \
+  --prompt='tool> ' \
+  --marker='▏' \
+  --pointer='▏' \
+  --preview="$preview" \
+  --preview-window='right,60%,border-left,wrap' \
+  --bind="enter:become($open)" \
+  --bind="ctrl-r:reload($reload)" \
+  --bind='ctrl-/:toggle-preview'

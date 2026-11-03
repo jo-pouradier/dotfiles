@@ -1,2 +1,3 @@
 .idea/
+.run/
 **/.claude/settings.local.json
